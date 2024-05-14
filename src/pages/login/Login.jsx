@@ -1,6 +1,6 @@
 import './login.scss'
 
-const login = () => {
+const Login = () => {
   return (
     <div className='login'>login</div>
   )

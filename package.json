@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "react-scripts": "^3.0.1",
     "sass": "^1.77.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   }
 }
