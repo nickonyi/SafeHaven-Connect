@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.register {
+    height: 100vh;
+    background-color: rgb(200, 231, 243);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card {
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: white;
+        width: 60%;
+        border-radius: 10px;
+        overflow: hidden;
+        
+        .left{
+            background:linear-gradient(rgba(11, 107, 145, 0.5),rgba(11, 107, 145, 0.5)),url("https://images.pexels.com/photos/4881619/pexels-photo-4881619.jpeg")
+             center;
+             background-size: cover;
+            flex: 1;
+            min-height: 400px;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            color: white;
+            h1 {
+                font-size: 70px;
+                line-height: 80px;
+            }
+            p{}
+            span{}
+            button{
+                width: 50%;
+                padding: 10px;
+                border: none;
+                background-color: white;
+                color: skyblue;
+                font-weight: bold;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
+        .right{
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 50px;
+            h1{
+                color: #555;
+            }
+            form{
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                input{
+                    border: none;
+                    border-bottom: 1px solid lightgray;
+                    padding: 20px 10px;
+                }
+                button{
+                    margin-top: 10px;
+                    width: 50%;
+                    padding: 10px;
+                    border: none;
+                    background-color: skyblue;
+                    color: white;
+                    font-weight: bold;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
