@@ -1,12 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .login {
+    height: 100vh;
+    background-color: yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .card {
+        display: flex;
+        border: 1px solid black;
         .left{
+            flex: 1;
             h1 {}
             p{}
             span{}
             button{}
         }
         .right{
+            flex: 1;
             h1{}
             form{
                 input{}
