@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
+import './app.scss'
 
 import {
   createBrowserRouter,

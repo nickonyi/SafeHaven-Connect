@@ -16,12 +16,25 @@ function NavBar() {
         <div className="left">
             <Link to="/Home" style={{textDecoration:"none"}}>
               <span>SafeHaven Connect</span>
+              </Link>  
               <HomeOutlinedIcon/>
               <DarkModeOutlinedIcon/>
               <GridViewOutlinedIcon/>
-            </Link>   
+              <div className="search">
+                <SearchOutlinedIcon />
+                <input type="text" placeholder='search...' />
+              </div>
+             
         </div>
-        <div className="right"></div>
+        <div className="right">
+          <PersonOutlinedIcon />
+          <EmailOutlinedIcon />
+          <NotificationsOutlinedIcon />
+          <div className="user">
+            <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+            <span>John Wafula</span>
+          </div>
+        </div>
     </div>
   )
 }

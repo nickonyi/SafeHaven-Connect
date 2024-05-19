@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    font-family: "Oswald", sans-serif;
+    border-bottom: 1px solid lightgray;
+    padding: 30px 20px;
+    .left{
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        span {
+          font-weight: bold;
+          font-size: 20px;
+          color: darkblue;
+        }
+        .search {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+            padding: 5px;
+            input {
+              border: none;
+              width: 500px;
+            }
+        }
+    }
+    .right{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            span{}
+        }
+    }
+}
