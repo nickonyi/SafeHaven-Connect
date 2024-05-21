@@ -20,7 +20,7 @@ function App() {
   const currentUser= true;
   const Layout =()=> {
     return (
-      <div>
+      <div className="theme-dark">
        <NavBar />
        <div style={{display:'flex'}}>
         <LeftBar/>
