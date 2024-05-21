@@ -69,6 +69,7 @@ function LeftBar() {
         </div>
         <hr />
         <span>Others</span>
+        <div className="menu">
         <div className="item">
             <img src={Tutorials} alt="" />
             <span>Tutorials</span>
@@ -81,6 +82,7 @@ function LeftBar() {
             <img src={Fund} alt="" />
             <span>Funds</span>
           </div>
+        </div>
       </div>
     </div>
   )

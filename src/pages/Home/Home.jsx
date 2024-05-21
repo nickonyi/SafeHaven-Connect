@@ -2,7 +2,31 @@ import './home.scss'
 
 function Home() {
   return (
-    <div className='home'>Home</div>
+    <div className='home'>
+      <div>Home</div>
+      <div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div><div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+    </div>
   )
 }
 
