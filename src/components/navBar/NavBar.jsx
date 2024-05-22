@@ -10,10 +10,12 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { DarkModeContext } from '../../context/DarkModeContext';
 import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 
 function NavBar() {
 const {toggle,darkMode} = useContext(DarkModeContext);
+const {currentUser,login} = useContext(AuthContext);
 
   return (
     <div className='navbar'>
@@ -35,8 +37,8 @@ const {toggle,darkMode} = useContext(DarkModeContext);
           <EmailOutlinedIcon />
           <NotificationsOutlinedIcon />
           <div className="user">
-            <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
-            <span>John Wafula</span>
+            <img src={currentUser.profilePic} />
+            <span>{currentUser.name}</span>
           </div>
         </div>
     </div>

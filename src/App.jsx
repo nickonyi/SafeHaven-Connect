@@ -15,14 +15,14 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import { DarkModeContext } from "./context/DarkModeContext";
-
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
 
   const {darkMode} = useContext(DarkModeContext);
-  console.log(darkMode);
   
-  const currentUser= true;
+  
+  const {currentUser}= useContext(AuthContext);
   const Layout =()=> {
     return (
       <div className={`theme-${darkMode?"dark":"light"}`}>

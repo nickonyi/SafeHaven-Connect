@@ -1,6 +1,10 @@
+import { useContext } from 'react';
 import './rightBar.scss'
+import { AuthContext } from '../../context/AuthContext';
 
 function RightBar() {
+const {currentUser } = useContext(AuthContext);
+
   return (
     <div className='rightbar'>
       <div className="container">
@@ -8,8 +12,8 @@ function RightBar() {
           <span>Suggestions For you</span>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
-              <span>Jane Doe</span>
+              <img src={currentUser.profilePic} alt="" />
+              <span>{currentUser.name}</span>
             </div>
             <div className="buttons">
               <button>Follow</button>
@@ -18,8 +22,8 @@ function RightBar() {
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
-              <span>Jane Doe</span>
+              <img src={currentUser.profilePic} alt="" />
+              <span>{currentUser.name}</span>
             </div>
             <div className="buttons">
               <button>Follow</button>
@@ -28,8 +32,8 @@ function RightBar() {
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
-              <span>Jane Doe</span>
+              <img src={currentUser.profilePic} alt="" />
+              <span>{currentUser.name}</span>
             </div>
             <div className="buttons">
               <button>Follow</button>
@@ -41,9 +45,9 @@ function RightBar() {
            <span>Latest activities</span>
            <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <p>
-              <span>Jane Doe  </span> changed their cover picture
+              <span>{currentUser.name} </span> changed their cover picture
               </p>
             </div>
             <div className="buttons">
@@ -52,7 +56,7 @@ function RightBar() {
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <p>
               <span>Jane Doe  </span> changed their profile picture
               </p>
@@ -63,7 +67,7 @@ function RightBar() {
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <p>
               <span>Jane Doe  </span> just came online
               </p>
@@ -77,28 +81,28 @@ function RightBar() {
           <span>Online friends</span>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <div className="online"/>
                 <span>Jane Doe </span>
             </div>
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <div className="online"/>
                 <span>Jane Doe </span>
             </div>
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <div className="online"/>
                 <span>Jane Doe </span>
             </div>
           </div>
           <div className="user">
             <div className="user-info">
-              <img src="https://images.pexels.com/photos/3228727/pexels-photo-3228727.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
+              <img src={currentUser.profilePic} alt="" />
               <div className="online"/>
                 <span>Jane Doe </span>
             </div>
