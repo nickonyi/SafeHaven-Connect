@@ -1,0 +1,21 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin: 30px;
+    .user {
+        .user-info{
+            height: 440px;
+            img {
+                width: 100%;
+                height: 100%;
+                
+            }
+            .details {
+                span {}
+            }
+        }
+    }
+    .content{}
+    .info{}
+}
