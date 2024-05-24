@@ -48,7 +48,18 @@
                     margin-top: 20px;
                 }
             }
-            .info{}
+            .info{
+                display: flex;
+                align-items: center;
+                gap: 20px;
+
+                .item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    cursor: pointer;
+                }
+            }
         }
     }
 }
