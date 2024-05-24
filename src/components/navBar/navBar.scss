@@ -14,6 +14,7 @@
     background-color: themed('bgColor');
     color: themed('textColor');
     cursor: pointer;
+    z-index: 999;
     .left{
         display: flex;
         align-items: center;
