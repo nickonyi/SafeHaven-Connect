@@ -1,4 +1,6 @@
+import { useContext } from 'react'
 import './comments.scss'
+import { AuthContext } from '../../context/AuthContext';
 
 function Comments() {
   const comments = [{
@@ -23,8 +25,16 @@ function Comments() {
     profilePic: 'https://www.w3schools.com/howto/img_avatar.png',
 }
 ]
+  const {currentUser}= useContext(AuthContext);
+
     return (
-    <div className='comments'>{
+    <div className='comments'>
+        <div className="write">
+            <img src={currentUser.profilePic}alt="" />
+            <input type="text" placeholder="Write a comment..." />
+            <button>Send</button>
+        </div>
+        {
         comments.map(comment =>(
             <div className="comment">
                 <img src={comment.profilePic} alt="" />
@@ -35,7 +45,8 @@ function Comments() {
                 <span className="date">1 hour ago</span>
             </div>
         ))
-    }</div>
+    }
+    </div>
   )
 }
 
