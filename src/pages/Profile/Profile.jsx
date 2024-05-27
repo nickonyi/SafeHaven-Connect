@@ -16,8 +16,9 @@ function Profile() {
       <div className="images">
         <img src="https://images.pexels.com/photos/23698636/pexels-photo-23698636/free-photo-of-a-room-with-pictures-on-the-wall-and-tables.jpeg" alt="" className="cover" />
         <img src="https://images.pexels.com/photos/23483902/pexels-photo-23483902/free-photo-of-a-woman-in-a-white-shirt-and-brown-boots-standing-in-a-field.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className="profile" />
+        </div>
         <div className="profile-container">
-          <div className="user-info">
+          <div className="user__info">
             <div className="left">
             <a href="http://facebook.com">
               <FacebookTwoToneIcon fontSize="large" />
@@ -54,8 +55,8 @@ function Profile() {
               <MoreVertIcon />
             </div>
           </div>
+          <Posts />
         </div>
-      </div>
     </div>
   )
 }
