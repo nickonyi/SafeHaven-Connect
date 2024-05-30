@@ -4,12 +4,13 @@ import bcrypt from "bcryptjs"
 export const register = (req,res)=>{
    //check if the user exixts
    const sql = 'SELECT * FROM users WHERE username = ?';
-   db.query(sql,[req.body.username],(err,result => {
+ 
+   db.query(sql,[req.body.username],(err,result) => {
          if(err) {
-              res.status(500).json({message:err});
+              return res.status(500).json({message:err});
          }
          if(result.length > 0) {
-              res.status(400).json({message:"User already exists"});
+             return res.status(400).json({message:"User already exists"});
          }
 
          //creater new user
@@ -26,18 +27,35 @@ export const register = (req,res)=>{
        hashedPassword,
        hashedConfirmPassword
    ];
-   }));
+   
 
    db.query(sql,[values],(err,result)=>{
          if(err) {
-              res.status(500).json({message:err});
+              return res.status(500).json({message:err});
          }
-         res.status(200).json({message:"User has been registered"});
+         return res.status(200).json({message:"User has been created"});
    })
    
+});
 }
 
 
-export const login = (req,res)=> {}
+export const login = (req,res)=> {
+    const sql = 'SELECT * FROM users WHERE username = ?';
+    db.query(sql,[req.body.username],(err,result)=>{
+        if(err){
+            return res.status(500).json(err);
+        }
+        if(result.length === 0){
+            return res.status(400).json('User not found!!');
+        }
+
+        const checkPassword = bcrypt.compareSync(req.body.password,result[0].password);
+
+        if(!checkPassword){
+            return res.status(400).json('Wrong password or username!!');
+        }
+    });
+}
 export const logout = (req,res)=>{}
 
