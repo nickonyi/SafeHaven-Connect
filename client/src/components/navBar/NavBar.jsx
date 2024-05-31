@@ -38,7 +38,7 @@ const {currentUser,login} = useContext(AuthContext);
           <NotificationsOutlinedIcon />
           <div className="user">
             <img src={currentUser.profilePic} />
-            <span>{currentUser.name}</span>
+            <span>{currentUser.username}</span>
           </div>
         </div>
     </div>

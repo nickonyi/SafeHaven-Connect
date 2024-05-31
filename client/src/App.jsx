@@ -56,7 +56,7 @@ function App() {
       </ProtectedLayout>),
       children: [
         { 
-        path: "/Home", 
+        path: "/", 
         element: <Home /> 
       },
       { 
