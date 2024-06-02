@@ -6,13 +6,16 @@ import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
 import './app.scss'
-
 import {
   createBrowserRouter,
   Navigate,
   Outlet,
   RouterProvider,
 } from "react-router-dom";
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import { useContext } from "react";
 import { DarkModeContext } from "./context/DarkModeContext";
 import { AuthContext } from "./context/AuthContext";
@@ -20,12 +23,12 @@ import { AuthContext } from "./context/AuthContext";
 function App() {
 
   const {darkMode} = useContext(DarkModeContext);
-  console.log(darkMode);
-  
-  
   const {currentUser}= useContext(AuthContext);
+
+  const queryClient = new QueryClient();
   const Layout =()=> {
     return (
+      <QueryClientProvider client ={queryClient}>
       <div className={`theme-${darkMode?"dark":"light"}`}>
        <NavBar />
        <div style={{display:'flex'}}>
@@ -36,6 +39,7 @@ function App() {
         <RightBar/>
        </div>
       </div>
+      </QueryClientProvider>
     )
   }
 

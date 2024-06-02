@@ -18,7 +18,7 @@ function Post({post}) {
       <div className="container">
       <div className="user">
             <div className="user-info">
-                <img src={post.photo} alt="" />
+                <img src={post.profilePic} alt="" />
                 <div className="details">
                     <Link to={`/Profile/${post.userID}`} style={{textDecoration:'none',color:'inherit'}}>
                     <span className='name'>{post.name}</span>
