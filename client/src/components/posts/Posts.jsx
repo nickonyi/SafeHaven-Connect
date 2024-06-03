@@ -12,6 +12,8 @@ function Posts() {
 }
 )
 
+
+
 console.log(data);
   
   return (
