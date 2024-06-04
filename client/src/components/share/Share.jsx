@@ -14,6 +14,19 @@ function Share() {
   const [file,setFile] = useState(null);
   const [desc,setDesc] = useState('');
 
+
+  const upload = async() => {
+    try {
+      const formData = new FormData();
+      formData.append('file',file);
+      const res = await makeRequest.post('/upload',formData);
+      return res.data;
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -27,10 +40,12 @@ function Share() {
     },
   })
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    mutation.mutate({desc})
-    console.log(desc);
+    let imgURL = '';
+    if(file) imgURL = await upload();
+    mutation.mutate({desc,img:imgURL})
+    
    
   }
 
