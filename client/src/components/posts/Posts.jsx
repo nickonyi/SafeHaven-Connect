@@ -18,7 +18,11 @@ console.log(data);
   
   return (
     <div className='posts'>
-      
+      {
+        data.map((post)=>(
+          <Post key={post.id} post={post}/> 
+        ))
+      }
     </div>
   )
 }
