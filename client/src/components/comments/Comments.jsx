@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import './comments.scss'
 import { AuthContext } from '../../context/AuthContext';
-import {useQuery} from '@tanstack/react-query';
+import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import moment from 'moment';
 
@@ -16,12 +16,32 @@ function Comments({postId}) {
 }
 )
 
+const queryClient = useQueryClient();
+
+const mutation = useMutation({
+  mutationFn: (newComment)=> {
+    return makeRequest.post('/comments',newComment)
+  
+  },
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries({ queryKey: ['comments'] })
+  },
+})
+
+const handleClick = async (e) => {
+  e.preventDefault();
+  mutation.mutate({desc,postId})
+  setDesc('');
+  
+}
+
     return (
     <div className='comments'>
         <div className="write">
             <img src={currentUser.profilePic}alt="" />
             <input type="text" placeholder="Write a comment..." />
-            <button>Send</button>
+            <button onClick={handleClick}>Send</button>
         </div>
         {isLoading?"Loading...":
         data.map(comment =>(

@@ -45,7 +45,8 @@ function Share() {
     let imgURL = '';
     if(file) imgURL = await upload();
     mutation.mutate({desc,img:imgURL})
-    
+    setDesc(' ');
+    setFile(null);
    
   }
 
@@ -54,7 +55,7 @@ function Share() {
       <div className="container">
         <div className="top">
           <img className="shareImg" src={currentUser.profilePic} alt="" />
-          <input placeholder={`What's in your mind? ${currentUser.username}`} onChange={(e)=> setDesc(e.target.value)}/>
+          <input placeholder={`What's in your mind? ${currentUser.username}`} value={desc} onChange={(e)=> setDesc(e.target.value)} />
         </div>
         <hr />
         <div className="bottom">
