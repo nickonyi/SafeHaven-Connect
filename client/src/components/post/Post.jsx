@@ -39,7 +39,7 @@ function Post({post}) {
           </div>
           <div className="item" onClick={()=> setComentisOpen(!comentisOpen)}>
             <TextsmsOutlinedIcon />
-            2 commentss
+            2 comments
         </div>
         <div className="item">
             <ShareOutlinedIcon />
