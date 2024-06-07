@@ -1,31 +1,20 @@
 import { useContext } from 'react'
 import './comments.scss'
 import { AuthContext } from '../../context/AuthContext';
+import {useQuery} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
+import moment from 'moment';
 
-function Comments() {
-  const comments = [{
-    id: 1,
-    desc: 'loreum ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    name: 'John Doe',
-    userID:1,
-    profilePic: 'https://www.w3schools.com/howto/img_avatar.png',
-},
-{
-    id: 2,
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    name: 'John Doe',
-    userID:2,
-    profilePic: 'https://www.w3schools.com/howto/img_avatar.png',
-},
-{
-    id: 3,
-    desc: 'lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    name: 'John Doe',
-    userID:1,
-    profilePic: 'https://www.w3schools.com/howto/img_avatar.png',
-}
-]
+function Comments({postId}) {
+  
   const {currentUser}= useContext(AuthContext);
+
+  const {isLoading, error, data}= useQuery({
+    queryKey: ['comments'],
+    queryFn: () =>
+      makeRequest.get('/comments?postId='+postId ).then((res) => res.data),
+}
+)
 
     return (
     <div className='comments'>
@@ -34,15 +23,15 @@ function Comments() {
             <input type="text" placeholder="Write a comment..." />
             <button>Send</button>
         </div>
-        {
-        comments.map(comment =>(
+        {isLoading?"Loading...":
+        data.map(comment =>(
             <div className="comment">
                 <img src={comment.profilePic} alt="" />
                 <div className="info">
                     <span>{comment.name}</span>
                     <p>{comment.desc}</p>
                 </div>
-                <span className="date">1 hour ago</span>
+                <span className="date">{moment(comment.createdAt).fromNow()}</span>
             </div>
         ))
     }

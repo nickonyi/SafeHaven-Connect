@@ -18,7 +18,7 @@ console.log(data);
   
   return (
     <div className='posts'>
-      {
+      { error ? "Something went wrong" : isLoading ? "Loading..." :
         data.map((post)=>(
           <Post key={post.id} post={post}/> 
         ))

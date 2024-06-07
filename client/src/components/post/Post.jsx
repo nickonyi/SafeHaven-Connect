@@ -46,7 +46,7 @@ function Post({post}) {
             Share
          </div>   
     </div>
-    {comentisOpen && (<Comments  />)}  
+    {comentisOpen && (<Comments postId={post.id} />)}  
   </div>
  </div>
   )
