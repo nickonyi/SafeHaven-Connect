@@ -7,12 +7,40 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from 'react-router-dom';
 import { FavoriteBorderOutlined } from '@mui/icons-material';
 import Comments from '../comments/Comments';
-import { useState } from 'react';
+import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+
 
 function Post({post}) {
-
-  const liked = false;
   const [comentisOpen, setComentisOpen] = useState(false);
+  const {currentUser} = useContext(AuthContext); 
+
+  const {isLoading, error, data}= useQuery({
+    queryKey: ['likes',post.id],
+    queryFn: () =>
+      makeRequest.get('/likes?postId=' + post.id).then((res) => res.data),
+}
+)
+console.log(data);
+const queryClient = useQueryClient();
+
+const mutation = useMutation({
+  mutationFn: (liked)=> {
+    if(liked) return makeRequest.delete('/likes?postId ='+post.id)
+    return makeRequest.post('/likes',{postId:post.id})
+  },
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries({ queryKey: ['likes'] })
+  },
+})
+
+
+  const handleLike =()=>{
+    mutation.mutate(data.includes(currentUser.id));
+  }
   return (
     <div className="post">
       <div className="container">
@@ -34,8 +62,11 @@ function Post({post}) {
         </div>
         <div className="info">
           <div className="item">
-            {liked? <FavoriteOutlinedIcon /> :<FavoriteBorderOutlined />}
-            12 likes
+            {isLoading?'Loading...'
+            :data.includes(currentUser.id)?
+            (<FavoriteOutlinedIcon style={{color:"red"}} onClick={handleLike} />) 
+            :(<FavoriteBorderOutlined />)}
+            {data.length} likes
           </div>
           <div className="item" onClick={()=> setComentisOpen(!comentisOpen)}>
             <TextsmsOutlinedIcon />
