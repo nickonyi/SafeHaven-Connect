@@ -20,7 +20,9 @@ function Post({post}) {
   const {isLoading, error, data}= useQuery({
     queryKey: ['likes',post.id],
     queryFn: () =>
-      makeRequest.get('/likes?postId=' + post.id).then((res) => res.data),
+      makeRequest.get('/likes?postId=' + post.id).then((res) => {
+        return res.data
+      })
 }
 )
 console.log(data);
@@ -65,8 +67,9 @@ const mutation = useMutation({
             {isLoading?'Loading...'
             :data.includes(currentUser.id)?
             (<FavoriteOutlinedIcon style={{color:"red"}} onClick={handleLike} />) 
-            :(<FavoriteBorderOutlined />)}
-            {data.length} likes
+  :(<FavoriteBorderOutlined onClick={handleLike} />)}
+            {isLoading?"0":data.length} likes
+            
           </div>
           <div className="item" onClick={()=> setComentisOpen(!comentisOpen)}>
             <TextsmsOutlinedIcon />
