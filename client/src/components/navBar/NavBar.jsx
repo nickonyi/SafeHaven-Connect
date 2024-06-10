@@ -20,7 +20,7 @@ const {currentUser,login} = useContext(AuthContext);
   return (
     <div className='navbar'>
         <div className="left">
-            <Link to="/Home" style={{textDecoration:"none"}}>
+            <Link to="/" style={{textDecoration:"none"}}>
               <span>SafeHaven Connect</span>
               </Link>  
               <HomeOutlinedIcon/>

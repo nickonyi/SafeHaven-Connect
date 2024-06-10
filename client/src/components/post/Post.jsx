@@ -17,6 +17,8 @@ function Post({post}) {
   const [comentisOpen, setComentisOpen] = useState(false);
   const {currentUser} = useContext(AuthContext); 
 
+  
+
   const {isLoading, error, data}= useQuery({
     queryKey: ['likes',post.id],
     queryFn: () =>
@@ -50,7 +52,7 @@ const mutation = useMutation({
             <div className="user-info">
                 <img src={post.profilePic} alt="" />
                 <div className="details">
-                    <Link to={`/Profile/${post.userID}`} style={{textDecoration:'none',color:'inherit'}}>
+                    <Link to={`/Profile/${post.userId}`} style={{textDecoration:'none',color:'inherit'}}>
                     <span className='name'>{post.username}</span>
                     </Link>
                     <span className="date">1 min ago</span>
