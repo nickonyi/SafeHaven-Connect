@@ -31,21 +31,34 @@ function Profile() {
 )
 
 
-  const {data:relationshipData}= useQuery({
-    queryKey: ['user'],
+  const {isLoading:rIsLoading,data:relationshipData}= useQuery({
+    queryKey: ['relationship'],
     queryFn: () =>
       makeRequest.get('/relationships?followedUserId=' + userId).then((res) => {
         return res.data
       })
 }
 )
-console.log(userId);
 
-console.log(relationshipData);
 
-const handleFollow = ()=>{
 
-}
+const queryClient = useQueryClient();
+
+const mutation = useMutation({
+  mutationFn: (following)=> {
+    if(following) return makeRequest.delete('/relationships?userId='+userId)
+    return makeRequest.post('/relationships',{userId:userId})
+  },
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries({ queryKey: ['relationship'] })
+  },
+})
+
+
+  const handleFollow =()=>{
+    mutation.mutate(relationshipData.includes(currentUser.id));
+  }
 
   return (
     <div className='profile'>
@@ -84,16 +97,18 @@ const handleFollow = ()=>{
                   <span>www.johndoe.com</span>
                 </div>
               </div>
-             { userId === currentUser.id?
+             { rIsLoading?"Loading...":userId === currentUser.id?
              (<button>Update</button>):
-             (<button onClick={handleFollow}>Follow</button>)}
+             (<button onClick={handleFollow}>
+              {relationshipData.includes(currentUser.id)?"Following":"Follow"}
+             </button>)}
             </div>
             <div className="right">
               <EmailOutlinedIcon />
               <MoreVertIcon />
             </div>
           </div>
-          <Posts />
+          <Posts userId={userId} />
         </div>
     </div>
   )

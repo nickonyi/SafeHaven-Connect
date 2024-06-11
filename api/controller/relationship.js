@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const getRelationships = (req,res)=> {
     const sql = "SELECT followerUserId FROM relationships WHERE followedUserId = ?";
-    console.log(req.query.followedUserId);
+    
 
     db.query(sql,[req.query.followedUserId],(err,data)=>{
         if(err){
@@ -22,19 +22,21 @@ export const addRelationship = (req,res)=> {
     jwt.verify(token,"secretkey",(err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
 
-        const sql = "INSERT INTO likes (`userId`,`postId`) VALUES (?)";
+        const sql = "INSERT INTO relationships (`followerUserId`,`followedUserId`) VALUES (?)";
 
         const values = [ 
            userInfo.id,
-           req.body.postId 
+           req.body.userId 
         ]
+
+       
     
         db.query(sql,[values],(err,data)=>{
             if(err){
                 return res.status(500).json(err);
             }
     
-            return res.status(200).json("Post has been liked!");
+            return res.status(200).json("Following!");
         })
     })
 }
@@ -46,15 +48,15 @@ export const deleteRelationship = (req,res)=> {
     jwt.verify(token,"secretkey",(err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
 
-        const sql = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ?";
+        const sql = "DELETE FROM relationships WHERE `followerUserId` = ? AND `followedUserId` = ?";
         
          
-        db.query(sql,[userInfo.id,req.query.postId],(err,data)=>{
+        db.query(sql,[userInfo.id,req.query.userId],(err,data)=>{
             if(err){
                 return res.status(500).json(err);
             }
 
-            return res.status(200).json("Like has been deleted!");
+            return res.status(200).json("unfollow!");
         })
     })
 }
