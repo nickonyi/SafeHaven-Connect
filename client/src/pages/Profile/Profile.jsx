@@ -19,6 +19,7 @@ import { Button } from '@mui/material';
 function Profile() {
 
   const userId = parseInt(useLocation().pathname.split('/')[2]);
+  
   const {currentUser} = useContext(AuthContext);
   const {isLoading, error, data}= useQuery({
     queryKey: ['user'],
@@ -29,7 +30,23 @@ function Profile() {
 }
 )
 
-console.log(data);
+
+  const {data:relationshipData}= useQuery({
+    queryKey: ['user'],
+    queryFn: () =>
+      makeRequest.get('/relationships?followedUserId=' + userId).then((res) => {
+        return res.data
+      })
+}
+)
+console.log(userId);
+
+console.log(relationshipData);
+
+const handleFollow = ()=>{
+
+}
+
   return (
     <div className='profile'>
       <div className="images">
@@ -67,7 +84,9 @@ console.log(data);
                   <span>www.johndoe.com</span>
                 </div>
               </div>
-             { userId === currentUser.id?(<button>Update</button>):(<button>Follow</button>)}
+             { userId === currentUser.id?
+             (<button>Update</button>):
+             (<button onClick={handleFollow}>Follow</button>)}
             </div>
             <div className="right">
               <EmailOutlinedIcon />
