@@ -11,7 +11,7 @@ import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-
+import moment from 'moment';
 
 function Post({post}) {
   const [comentisOpen, setComentisOpen] = useState(false);
@@ -27,6 +27,17 @@ function Post({post}) {
       })
 }
 )
+
+const {isLoading:isCommentLoading, data:commentData}= useQuery({
+  queryKey: ['comments',post.id],
+  queryFn: () =>
+    makeRequest.get('/comments?postId=' + post.id).then((res) => {
+      return res.data
+    })
+}
+)
+
+
 
 const queryClient = useQueryClient();
 
@@ -55,7 +66,7 @@ const mutation = useMutation({
                     <Link to={`/Profile/${post.userId}`} style={{textDecoration:'none',color:'inherit'}}>
                     <span className='name'>{post.username}</span>
                     </Link>
-                    <span className="date">1 min ago</span>
+                    <span className="date">{moment(post.createdAt).fromNow()}</span>
                 </div>
             </div>
              <MoreHorizIcon />
@@ -70,12 +81,12 @@ const mutation = useMutation({
             :data.includes(currentUser.id)?
             (<FavoriteOutlinedIcon style={{color:"red"}} onClick={handleLike} />) 
   :(<FavoriteBorderOutlined onClick={handleLike} />)}
-            {isLoading?"0":data.length} likes
+            {isLoading?"0":data.length == 1?"1 like":data.length + " likes"  }
             
           </div>
           <div className="item" onClick={()=> setComentisOpen(!comentisOpen)}>
             <TextsmsOutlinedIcon />
-            2 comments
+            {isCommentLoading?"Loading..":commentData.length == 1?"1 Comment":commentData.length + " Comments"}
         </div>
         <div className="item">
             <ShareOutlinedIcon />

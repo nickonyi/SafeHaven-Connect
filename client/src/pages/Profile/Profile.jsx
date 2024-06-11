@@ -12,11 +12,16 @@ import Posts from "../../components/posts/Posts"
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import { useLocation } from 'react-router-dom';
-import { useContext } from 'react';
+import { useState,useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Button } from '@mui/material';
+import Update from '../../components/update/update';
+
+
 
 function Profile() {
+  
+  const[openUpdate,setOpenUpdate] = useState(false);
 
   const userId = parseInt(useLocation().pathname.split('/')[2]);
   
@@ -60,6 +65,8 @@ const mutation = useMutation({
     mutation.mutate(relationshipData.includes(currentUser.id));
   }
 
+  console.log(openUpdate);
+
   return (
     <div className='profile'>
       <div className="images">
@@ -93,12 +100,12 @@ const mutation = useMutation({
                   <span>{isLoading?"":data.city}</span>
                 </div>
                 <div className="item">
-                  <LanguageIcon />
-                  <span>www.johndoe.com</span>
+                <EmailOutlinedIcon />
+                  <span>{isLoading?"":data.email}</span>
                 </div>
               </div>
              { rIsLoading?"Loading...":userId === currentUser.id?
-             (<button>Update</button>):
+             (<button onClick={()=> setOpenUpdate(true)}>Update</button>):
              (<button onClick={handleFollow}>
               {relationshipData.includes(currentUser.id)?"Following":"Follow"}
              </button>)}
@@ -110,6 +117,7 @@ const mutation = useMutation({
           </div>
           <Posts userId={userId} />
         </div>
+        {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
     </div>
   )
 }
