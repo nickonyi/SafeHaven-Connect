@@ -5,8 +5,8 @@ import { makeRequest } from '../../axios';
 
 function Update({setOpenUpdate,user}) {
     
-    const [coverPic,setCoverPic] = useState(user.coverPic);
-    const [profilePic,setProfilePic] = useState(user.profilePic);
+    const [coverPic,setCoverPic] = useState(null);
+    const [profilePic,setProfilePic] = useState(null);
 
     const [texts,setTexts] = useState({
         username:'',
