@@ -60,3 +60,24 @@ export const deleteRelationship = (req,res)=> {
         })
     })
 }
+
+export const getSuggestions = (req,res)=> {
+    
+
+    const userId = req.params.userId;
+
+  // Example query to find users with mutual connections
+  const sql = `
+    SELECT u.id, u.username, u.city,u.profilePic, u.coverPic
+    FROM users u
+    WHERE u.id != ? AND u.id NOT IN (SELECT followedUserId FROM relationships WHERE followerUserId = ?)
+    ORDER BY RAND() LIMIT 5;
+  `;
+
+  db.query(sql, [userId, userId], (err, results) => {
+    if (err) return res.status(500).json(err);
+    res.status(200).json(results);
+  });
+
+    
+}
