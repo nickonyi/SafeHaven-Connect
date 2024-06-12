@@ -31,7 +31,7 @@ function Update({setOpenUpdate,user}) {
     }
 
     const queryClient = useQueryClient();
-    console.log(user);
+    
 
     const mutation = useMutation({
       mutationFn: (user)=> {
@@ -49,10 +49,10 @@ function Update({setOpenUpdate,user}) {
       let coverURL = user.coverPic;
       let profileURL = user.profilePic;
       
-      console.log(coverURL,profileURL);
-       coverURL = coverPic && await upload(coverPic);
-       profileURL = profilePic && await upload(profilePic);
-       console.log(coverURL,profileURL);
+      
+       coverURL = coverPic ?  await upload(coverPic): user.coverPic;
+       profileURL = profilePic ? await upload(profilePic): user.profilePic;
+    
       mutation.mutate({...texts,coverPic:coverURL,profilePic:profileURL})
       setOpenUpdate(false);
      
@@ -60,8 +60,8 @@ function Update({setOpenUpdate,user}) {
   return (
     <div className='update'>
         <form>
-            <input type="file" />
-            <input type="file" />
+            <input type="file" onChange={(e)=> setCoverPic(e.target.files[0])} />
+            <input type="file" onChange={(e)=> setProfilePic(e.target.files[0])} />
             <input type="text" name="username" onChange={handleChange}  />
             <input type="text" name="city" onChange={handleChange}  />
             <input type="text" name="email" onChange={handleChange}  />
