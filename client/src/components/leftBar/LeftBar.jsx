@@ -14,17 +14,31 @@ import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import {useQuery} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
 
 function LeftBar() {
 const {currentUser } = useContext(AuthContext);
+
+const userId = currentUser.id;
+
+const {isLoading, error, data}= useQuery({
+  queryKey: ['user'],
+  queryFn: () =>
+    makeRequest.get('/users/find/' + userId).then((res) => {
+      return res.data
+    })
+}
+)
+
 
   return (
     <div className='leftbar'>
       <div className="container">
         <div className="menu">
           <div className="user">
-           <img src={currentUser.profilePic} alt="" />
-            <span>{currentUser.username}</span>
+           <img src={isLoading?"":"/uploads/" + data.profilePic} alt="" />
+            <span>{isLoading?"":data.username}</span>
           </div>
           <div className="item">
             <img src={Friends} alt="" />

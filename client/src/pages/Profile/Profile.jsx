@@ -65,7 +65,7 @@ const mutation = useMutation({
     mutation.mutate(relationshipData.includes(currentUser.id));
   }
 
-  console.log(openUpdate);
+  
 
   return (
     <div className='profile'>

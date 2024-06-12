@@ -11,11 +11,24 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { DarkModeContext } from '../../context/DarkModeContext';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import {useQuery} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
 
 
 function NavBar() {
 const {toggle,darkMode} = useContext(DarkModeContext);
 const {currentUser,login} = useContext(AuthContext);
+
+const userId = currentUser.id;
+
+const {isLoading, error, data}= useQuery({
+  queryKey: ['user'],
+  queryFn: () =>
+    makeRequest.get('/users/find/' + userId).then((res) => {
+      return res.data
+    })
+}
+)
 
   return (
     <div className='navbar'>
@@ -37,8 +50,8 @@ const {currentUser,login} = useContext(AuthContext);
           <EmailOutlinedIcon />
           <NotificationsOutlinedIcon />
           <div className="user">
-            <img src={currentUser.profilePic} />
-            <span>{currentUser.username}</span>
+            <img src={isLoading?"":"/uploads/"+data.profilePic} />
+            <span>{isLoading?"":data.username}</span>
           </div>
         </div>
     </div>

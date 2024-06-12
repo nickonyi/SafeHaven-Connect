@@ -12,7 +12,7 @@ const {currentUser } = useContext(AuthContext);
           <span>Suggestions For you</span>
           <div className="user">
             <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
+              <img src={"/uploads/"+ currentUser.profilePic} alt="" />
               <span>{currentUser.name}</span>
             </div>
             <div className="buttons">

@@ -61,7 +61,7 @@ const mutation = useMutation({
       <div className="container">
       <div className="user">
             <div className="user-info">
-                <img src={post.profilePic} alt="" />
+                <img src={'/uploads/' + post.profilePic} alt="" />
                 <div className="details">
                     <Link to={`/Profile/${post.userId}`} style={{textDecoration:'none',color:'inherit'}}>
                     <span className='name'>{post.username}</span>
