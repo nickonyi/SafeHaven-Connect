@@ -18,6 +18,8 @@ function Comments({postId}) {
 }
 )
 
+
+
 const queryClient = useQueryClient();
 
 const mutation = useMutation({
@@ -38,17 +40,17 @@ const handleClick = async (e) => {
   
 }
 
-    return (
+    return ( isLoading?"Loading...":(
     <div className='comments'>
         <div className="write">
-            <img src={currentUser.profilePic}alt="" />
+            <img src={"/uploads/"+ currentUser.profilePic}alt="" />
             <input type="text" value={desc} placeholder="Write a comment..." onChange={(e)=> setDesc(e.target.value)} />
             <button onClick={handleClick}>Send</button>
         </div>
         {isLoading?"Loading...":
         data.map(comment =>(
             <div className="comment">
-                <img src={comment.profilePic} alt="" />
+                <img src={"/uploads/"+comment.profilePic} alt="" />
                 <div className="info">
                     <span>{comment.name}</span>
                     <p>{comment.desc}</p>
@@ -59,6 +61,7 @@ const handleClick = async (e) => {
     }
     </div>
   )
+)
 }
 
 export default Comments

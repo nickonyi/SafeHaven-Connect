@@ -17,7 +17,7 @@ export const getUser = (req, res) => {
 
 export const updateUser = (req,res)=> {
     const token = req.cookies.accessToken;
-    console.log(token);
+   
     if(!token) return res.status(401).json('Not logged in!');
     jwt.verify(token,"secretkey",(err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
@@ -33,13 +33,13 @@ export const updateUser = (req,res)=> {
            userInfo.id
         ]
 
-        console.log("SQL values:", values);
+        
     
         db.query(sql,values,(err,data)=>{
             if(err){
                 return res.status(500).json(err);
             }
-             console.log('final stage');
+             
             if(data.affectedRows > 0)return res.status(200).json("Updated!");
             return res.status(404).json("Update only your post!");
         })
