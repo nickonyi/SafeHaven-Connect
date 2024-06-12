@@ -70,8 +70,8 @@ const mutation = useMutation({
   return (
     <div className='profile'>
       <div className="images">
-        <img src={isLoading?"":data.coverPic} alt="" className="cover" />
-        <img src={isLoading?"":data.profilePic} alt="" className="profile" />
+        <img src={isLoading?"":"/uploads/" + data.coverPic} alt="" className="cover" />
+        <img src={isLoading?"":"/uploads/" + data.profilePic} alt="" className="profile" />
         </div>
         <div className="profile-container">
           <div className="user__info">
