@@ -22,20 +22,20 @@ export const updateUser = (req,res)=> {
     jwt.verify(token,"secretkey",(err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
 
-        const sql = "UPDATE users SET `username` = ?, `email` = ?,  `coverPic` = ?,`profilePic` = ?, `city` = ?, WHERE `id` = ?";
+        const sql = "UPDATE users SET `username` = ?, `email` = ?,  `coverPic` = ?,`profilePic` = ?, `city` = ? WHERE `id` = ?";
 
         const values = [ 
            req.body.username,
            req.body.email,
-           req.body.profilePic,
            req.body.coverPic,
+           req.body.profilePic,
            req.body.city,
            userInfo.id
         ]
 
-       console.log(values);
+        console.log("SQL values:", values);
     
-        db.query(sql,[values],(err,data)=>{
+        db.query(sql,values,(err,data)=>{
             if(err){
                 return res.status(500).json(err);
             }
