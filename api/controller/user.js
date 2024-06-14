@@ -10,7 +10,7 @@ export const getUser = (req, res) => {
         if (err) {
             return res.status(500).json(err);
         }
-         const {password,confirmPassword, ...info} = data[0];
+         const {password, ...info} = data[0];
         return res.status(200).json(info);
     })
 }
