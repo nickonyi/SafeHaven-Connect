@@ -18,11 +18,11 @@ function Stories() {
   }
   );
 
-  console.log(storiesData);
+
 
 
 const userId = currentUser.id;
-console.log(userId);
+
 const {isLoading, error, data}= useQuery({
   queryKey: ['user'],
   queryFn: () =>
@@ -40,8 +40,8 @@ const {isLoading, error, data}= useQuery({
        <span>{data.username}</span>
        <button>+</button>
        </div>
-      {storiesData.map((story)=>(
-        <div className="story" key={storiesData.id}>
+      {storiesLoading?"Loading...":storiesData.map((story)=>(
+        <div className="story" key={story.id}>
           <img src={"/uploads/"+story.img} alt="" />
           <span>{story.username}</span>
         </div>

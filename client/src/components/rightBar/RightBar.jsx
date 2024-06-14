@@ -18,7 +18,6 @@ const {isLoading, error, data}= useQuery({
 }
 )
 
-console.log(data);
 
   return ( isLoading?"Loading...":(
     <div className='rightbar'>
@@ -26,7 +25,7 @@ console.log(data);
         <div className="item">
           <span>Suggestions For you</span>
           {data.map((user)=>(
-            <div className="user">
+            <div className="user" key={user.id}>
             <div className="user-info">
               <img src={"/uploads/"+ user.profilePic} alt="" />
               <span>{user.username}</span>
