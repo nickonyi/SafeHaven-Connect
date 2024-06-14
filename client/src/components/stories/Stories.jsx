@@ -18,6 +18,8 @@ function Stories() {
   }
   );
 
+  console.log(storiesData)
+
 
 
 
