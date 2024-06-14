@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import './stories.scss'
 import { AuthContext } from '../../context/AuthContext';
+import {useQuery} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
 
 //Temporary data
 const stories = [
@@ -26,13 +28,28 @@ const stories = [
   }
 ];
 
+
+
 function Stories() {
-  const {currentUser} = useContext(AuthContext)
-  return (
+  const {currentUser} = useContext(AuthContext);
+
+const userId = currentUser.id;
+console.log(userId);
+const {isLoading, error, data}= useQuery({
+  queryKey: ['user'],
+  queryFn: () =>
+    makeRequest.get('/users/find/' + userId).then((res) => {
+      return res.data
+    })
+}
+)
+
+
+  return ( isLoading?"Loading...":(
     <div className='stories'>
        <div className="story">
-       <img src={currentUser.profilePic} alt="" />
-       <span>{currentUser.name}</span>
+       <img src={"/uploads/" + data.profilePic} alt="" />
+       <span>{data.username}</span>
        <button>+</button>
        </div>
       {stories.map((story)=>(
@@ -42,6 +59,7 @@ function Stories() {
         </div>
       ))}
     </div>
+  )
   )
 }
 

@@ -9,13 +9,69 @@ import LanguageIcon from "@mui/icons-material/Language";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/Posts"
+import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
+import { useLocation } from 'react-router-dom';
+import { useState,useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { Button } from '@mui/material';
+import Update from '../../components/update/update';
+
+
 
 function Profile() {
+  
+  const[openUpdate,setOpenUpdate] = useState(false);
+
+  const userId = parseInt(useLocation().pathname.split('/')[2]);
+  
+  const {currentUser} = useContext(AuthContext);
+  const {isLoading, error, data}= useQuery({
+    queryKey: ['user'],
+    queryFn: () =>
+      makeRequest.get('/users/find/' + userId).then((res) => {
+        return res.data
+      })
+}
+)
+
+
+  const {isLoading:rIsLoading,data:relationshipData}= useQuery({
+    queryKey: ['relationship'],
+    queryFn: () =>
+      makeRequest.get('/relationships?followedUserId=' + userId).then((res) => {
+        return res.data
+      })
+}
+)
+
+
+
+const queryClient = useQueryClient();
+
+const mutation = useMutation({
+  mutationFn: (following)=> {
+    if(following) return makeRequest.delete('/relationships?userId='+userId)
+    return makeRequest.post('/relationships',{userId:userId})
+  },
+  onSuccess: () => {
+    // Invalidate and refetch
+    queryClient.invalidateQueries({ queryKey: ['relationship'] })
+  },
+})
+
+
+  const handleFollow =()=>{
+    mutation.mutate(relationshipData.includes(currentUser.id));
+  }
+
+  
+
   return (
     <div className='profile'>
       <div className="images">
-        <img src="https://images.pexels.com/photos/23698636/pexels-photo-23698636/free-photo-of-a-room-with-pictures-on-the-wall-and-tables.jpeg" alt="" className="cover" />
-        <img src="https://images.pexels.com/photos/23483902/pexels-photo-23483902/free-photo-of-a-woman-in-a-white-shirt-and-brown-boots-standing-in-a-field.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" className="profile" />
+        <img src={isLoading?"":"/uploads/" + data.coverPic} alt="" className="cover" />
+        <img src={isLoading?"":"/uploads/" + data.profilePic} alt="" className="profile" />
         </div>
         <div className="profile-container">
           <div className="user__info">
@@ -37,26 +93,31 @@ function Profile() {
             </a>
             </div>
             <div className="center">
-              <span>John doe</span>
+              <span>{isLoading?"":data.username}</span>
               <div className="info">
                 <div className="item">
                   <PlaceIcon />
-                  <span>USA</span>
+                  <span>{isLoading?"":data.city}</span>
                 </div>
                 <div className="item">
-                  <LanguageIcon />
-                  <span>www.johndoe.com</span>
+                <EmailOutlinedIcon />
+                  <span>{isLoading?"":data.email}</span>
                 </div>
               </div>
-              <button>Follow</button>
+             { rIsLoading?"Loading...":userId === currentUser.id?
+             (<button onClick={()=> setOpenUpdate(true)}>Update</button>):
+             (<button onClick={handleFollow}>
+              {relationshipData.includes(currentUser.id)?"Following":"Follow"}
+             </button>)}
             </div>
             <div className="right">
               <EmailOutlinedIcon />
               <MoreVertIcon />
             </div>
           </div>
-          <Posts />
+          <Posts userId={userId} />
         </div>
+        {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
     </div>
   )
 }

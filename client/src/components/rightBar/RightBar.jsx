@@ -1,46 +1,45 @@
 import { useContext } from 'react';
 import './rightBar.scss'
 import { AuthContext } from '../../context/AuthContext';
+import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
+import { makeRequest } from '../../axios';
 
 function RightBar() {
 const {currentUser } = useContext(AuthContext);
 
-  return (
+const userId = currentUser.id;
+
+const {isLoading, error, data}= useQuery({
+  queryKey: ['suggestions'],
+  queryFn: () =>
+    makeRequest.get('/relationships/suggestions/' + userId).then((res) => {
+      return res.data
+    })
+}
+)
+
+console.log(data);
+
+  return ( isLoading?"Loading...":(
     <div className='rightbar'>
       <div className="container">
         <div className="item">
           <span>Suggestions For you</span>
-          <div className="user">
+          {data.map((user)=>(
+            <div className="user">
             <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <span>{currentUser.name}</span>
+              <img src={"/uploads/"+ user.profilePic} alt="" />
+              <span>{user.username}</span>
             </div>
             <div className="buttons">
               <button>Follow</button>
               <button>Dismiss</button>
             </div>
-          </div>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <span>{currentUser.name}</span>
             </div>
-            <div className="buttons">
-              <button>Follow</button>
-              <button>Dismiss</button>
-            </div>
-          </div>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <span>{currentUser.name}</span>
-            </div>
-            <div className="buttons">
-              <button>Follow</button>
-              <button>Dismiss</button>
-            </div>
-          </div>
-        </div>
+          )
+        )
+        }
+          
         <div className="item">
            <span>Latest activities</span>
            <div className="user">
@@ -110,7 +109,10 @@ const {currentUser } = useContext(AuthContext);
         </div>
       </div>
     </div>
+  </div>
   )
+)
+
 }
 
 export default RightBar

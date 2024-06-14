@@ -4,12 +4,24 @@ import Map from "../../assets/map.png";
 import Friend from "../../assets/friend.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
-import {useMutation,useQueryClient} from '@tanstack/react-query'
+import {useMutation,useQueryClient,useQuery} from '@tanstack/react-query'
 import { makeRequest } from '../../axios';
 
 function Share() {
+const {currentUser}= useContext(AuthContext);
 
-  const {currentUser}= useContext(AuthContext);
+ 
+
+const userId = currentUser.id;
+
+const {isLoading, error, data}= useQuery({
+  queryKey: ['user'],
+  queryFn: () =>
+    makeRequest.get('/users/find/' + userId).then((res) => {
+      return res.data
+    })
+}
+)
   
   const [file,setFile] = useState(null);
   const [desc,setDesc] = useState('');
@@ -45,16 +57,17 @@ function Share() {
     let imgURL = '';
     if(file) imgURL = await upload();
     mutation.mutate({desc,img:imgURL})
-    
+    setDesc(' ');
+    setFile(null);
    
   }
 
-  return (
+  return (isLoading?"":(
     <div className='share'>
       <div className="container">
         <div className="top">
-          <img className="shareImg" src={currentUser.profilePic} alt="" />
-          <input placeholder={`What's in your mind? ${currentUser.username}`} onChange={(e)=> setDesc(e.target.value)}/>
+          <img className="shareImg" src={"/uploads/"+ data.profilePic} alt="" />
+          <input placeholder={`What's in your mind? ${data.username}`} value={desc} onChange={(e)=> setDesc(e.target.value)} />
         </div>
         <hr />
         <div className="bottom">
@@ -82,6 +95,7 @@ function Share() {
       </div>
     </div>
   )
+)
 }
 
 export default Share

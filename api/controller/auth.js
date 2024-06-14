@@ -59,7 +59,7 @@ export const login = (req,res)=> {
 
         const token = jwt.sign({id:result[0].id},'secretkey');
 
-        const {password, ...other} = result[0];
+        const {password,confirmPassword, ...other} = result[0];
          res.
          cookie('accessToken',token,{
             httpOnly:true,
