@@ -49,7 +49,7 @@ export const deleteStory = (req, res) => {
   if (!token) return res.status(401).json("Not logged in!");
 
   jwt.verify(token, "secretkey", (err, userInfo) => {
-    if (err) return res.status(403).json("Token is not valid!");
+    if (err) return res.status(403).json("Token is not valid!!");
 
     const q = "DELETE FROM stories WHERE `id`=? AND `userId` = ?";
 
