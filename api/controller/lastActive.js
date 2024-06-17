@@ -16,7 +16,7 @@ export const getOnlineUsers =(req, res) => {
         SELECT u.id, u.username,u.profilePic
         FROM safehaven.users as u
         JOIN safehaven.relationships r ON u.id = r.followedUserId
-        WHERE r.followerUserId = ?
+        WHERE r.followerUserId = ? AND u.is_online = 1
       `;
 
     db.query(sql, [userInfo.id], (err, data) => {
