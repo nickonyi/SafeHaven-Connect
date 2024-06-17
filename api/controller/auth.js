@@ -56,7 +56,7 @@ export const login = (req,res)=> {
         if(!checkPassword){
             return res.status(400).json('Wrong password or username!!');
         }
-
+        db.query('UPDATE users SET is_online = TRUE WHERE id = ?', [result[0].id]);
         const token = jwt.sign({id:result[0].id},'secretkey');
 
         const {password,confirmPassword, ...other} = result[0];

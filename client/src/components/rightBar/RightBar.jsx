@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext';
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import FollowButton from '../followButton/followButton.jsx';
+import OnlineFollowingUsers from '../onlineUsers/onlineUsers.jsx';
 
 function RightBar() {
 const {currentUser } = useContext(AuthContext);
@@ -18,7 +19,7 @@ const {isLoading, error, data}= useQuery({
     })
 }
 )
-console.log(data);
+
 
 const {isLoading:rIsLoading,data:relationshipData}= useQuery({
   queryKey: ['relationship'],
@@ -53,37 +54,9 @@ const {isLoading:rIsLoading,data:relationshipData}= useQuery({
           )
         )
         }
-        <div className="item">
-          <span>Online friends</span>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <div className="online"/>
-                <span>Jane Doe </span>
-            </div>
-          </div>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <div className="online"/>
-                <span>Jane Doe </span>
-            </div>
-          </div>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <div className="online"/>
-                <span>Jane Doe </span>
-            </div>
-          </div>
-          <div className="user">
-            <div className="user-info">
-              <img src={currentUser.profilePic} alt="" />
-              <div className="online"/>
-                <span>Jane Doe </span>
-            </div>
-          </div>
-        </div>
+
+         <OnlineFollowingUsers userId={userId} />
+      
       </div>
     </div>
   </div>

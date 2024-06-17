@@ -30,7 +30,7 @@ const {isLoading, error, data}= useQuery({
 }
 )
 
-console.log(data);
+
 
   return (isLoading?"Loading...":(
     <div className='navbar'>

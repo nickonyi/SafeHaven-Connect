@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import relationshipRoutes from './routes/relationships.js';
 import lastUserRoutes from './routes/lastActive.js';
 import storyRoutes from './routes/stories.js';
+import setupSocket from './controller/socket.js'; 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import multer from 'multer';
@@ -53,8 +54,10 @@ app.use('/api/stories',storyRoutes);
 app.use('/api/relationships',relationshipRoutes);
 app.use('/api/lastActive',lastUserRoutes);
 
+const server = setupSocket(app);
 
 
-app.listen(8800, () => {
+
+server.listen(8800, () => {
   console.log('Server running on port 8800');
 });
