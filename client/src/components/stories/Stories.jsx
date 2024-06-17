@@ -4,37 +4,27 @@ import { AuthContext } from '../../context/AuthContext';
 import {useQuery} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 
-//Temporary data
-const stories = [
-  {
-    id: 1,
-    profilePic: "https://images.pexels.com/photos/1080884/pexels-photo-1080884.jpeg",
-    username: "SafakKocaoglu",
-  },
-  {
-    id: 2,
-    profilePic: "https://images.pexels.com/photos/1080884/pexels-photo-1080884.jpeg",
-    username: "Janell Shrum",
-  },
-  {
-    id: 3,
-    profilePic: "https://images.pexels.com/photos/1080884/pexels-photo-1080884.jpeg",
-    username: "Alex Durden",
-  },
-  {
-    id: 4,
-    profilePic: "https://images.pexels.com/photos/1080884/pexels-photo-1080884.jpeg",
-    username: "Dora Hawks",
-  }
-];
-
 
 
 function Stories() {
   const {currentUser} = useContext(AuthContext);
 
+  const { isLoading:storiesLoading, data:storiesData } = useQuery({
+    queryKey: ['stories'],
+    queryFn: () =>
+      makeRequest.get('/stories').then((res) => {
+        return res.data
+      })
+  }
+  );
+
+  console.log(storiesData)
+
+
+
+
 const userId = currentUser.id;
-console.log(userId);
+
 const {isLoading, error, data}= useQuery({
   queryKey: ['user'],
   queryFn: () =>
@@ -52,9 +42,9 @@ const {isLoading, error, data}= useQuery({
        <span>{data.username}</span>
        <button>+</button>
        </div>
-      {stories.map((story)=>(
+      {storiesLoading?"Loading...":storiesData.map((story)=>(
         <div className="story" key={story.id}>
-          <img src={story.profilePic} alt="" />
+          <img src={"/uploads/"+story.img} alt="" />
           <span>{story.username}</span>
         </div>
       ))}

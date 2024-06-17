@@ -3,6 +3,7 @@ import './rightBar.scss'
 import { AuthContext } from '../../context/AuthContext';
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
+import FollowButton from '../followButton/followButton.jsx';
 
 function RightBar() {
 const {currentUser } = useContext(AuthContext);
@@ -17,8 +18,21 @@ const {isLoading, error, data}= useQuery({
     })
 }
 )
-
 console.log(data);
+
+const {isLoading:rIsLoading,data:relationshipData}= useQuery({
+  queryKey: ['relationship'],
+  queryFn: () =>
+    makeRequest.get('/relationships?followedUserId=' + userId).then((res) => {
+      return res.data
+    })
+}
+)
+
+
+
+
+  
 
   return ( isLoading?"Loading...":(
     <div className='rightbar'>
@@ -32,7 +46,7 @@ console.log(data);
               <span>{user.username}</span>
             </div>
             <div className="buttons">
-              <button>Follow</button>
+              <FollowButton followingId = {user.id} initialFollowStatus={false}/>
               <button>Dismiss</button>
             </div>
             </div>

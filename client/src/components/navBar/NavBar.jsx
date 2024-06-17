@@ -30,7 +30,9 @@ const {isLoading, error, data}= useQuery({
 }
 )
 
-  return (
+console.log(data);
+
+  return (isLoading?"Loading...":(
     <div className='navbar'>
         <div className="left">
             <Link to="/" style={{textDecoration:"none"}}>
@@ -49,13 +51,16 @@ const {isLoading, error, data}= useQuery({
           <PersonOutlinedIcon />
           <EmailOutlinedIcon />
           <NotificationsOutlinedIcon />
+          <Link to={`/Profile/${data.id}`} style={{textDecoration:'none',color:'inherit'}}>
           <div className="user">
             <img src={isLoading?"":"/uploads/"+data.profilePic} />
             <span>{isLoading?"":data.username}</span>
           </div>
+          </Link>
         </div>
     </div>
   )
+)
 }
 
 export default NavBar

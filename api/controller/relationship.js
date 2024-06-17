@@ -28,9 +28,7 @@ export const addRelationship = (req,res)=> {
            userInfo.id,
            req.body.userId 
         ]
-
        
-    
         db.query(sql,[values],(err,data)=>{
             if(err){
                 return res.status(500).json(err);
