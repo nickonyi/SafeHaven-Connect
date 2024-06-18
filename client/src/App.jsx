@@ -5,6 +5,7 @@ import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
+import Messenger from "./pages/messenger/messenger";
 import './app.scss'
 import {
   createBrowserRouter,
@@ -35,7 +36,7 @@ function App() {
  
   const Layout =()=> {
     return (
-      <QueryClientProvider client ={queryClient}>
+      <QueryClientProvider client ={queryClient}  contextSharing={true}>
       <div className={`theme-${darkMode?"dark":"light"}`}>
        <NavBar />
        <div style={{display:'flex'}}>
@@ -47,6 +48,20 @@ function App() {
        </div>
       </div>
       </QueryClientProvider>
+    )
+  }
+
+  const ChatLayout =()=> {
+    return (
+      <QueryClientProvider client ={queryClient}>
+      <div className={`theme-${darkMode?"dark":"light"}`}>
+        <NavBar />
+        <div style={{flex:6}}>
+          <Outlet />
+        </div>
+        </div>
+        </QueryClientProvider>
+
     )
   }
 
@@ -74,9 +89,23 @@ function App() {
       { 
         path: "/Profile/:id", 
         element: <Profile/> 
-      },
+      }
       ]
-    },{
+    },
+    {
+      path:'/messenger',
+      element: (
+      <ProtectedLayout>
+        <ChatLayout/>
+      </ProtectedLayout>),
+      children:[
+        {
+          path: '/messenger',
+          element: <Messenger/>
+        }
+      ]
+    },
+    {
       path: "/Login",
       element: <Login/>
     },
