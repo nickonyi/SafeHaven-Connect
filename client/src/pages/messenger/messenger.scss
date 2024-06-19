@@ -1,5 +1,35 @@
 @import '../../app.scss'; 
 
 .messenger {
-    @include themify($themes){}
+    @include themify($themes){
+        height: calc(100vh - 60px);
+        display: flex;
+        background-color: themed('bgColor');
+        color: themed('textColor');
+
+        .chat-menu{
+            flex: 3.5;
+            .chat-menu-input {
+                width: 90%;
+                padding: 10px 0;
+                border: none;
+                background-color: transparent;
+                border-bottom: 1px solid themed('border');
+            }
+        }
+        .chat-box{
+            flex: 5.5;
+            background-color: themed('bgSoft');
+            color: themed('textColor');
+            
+        }
+        .chat-online{
+            flex: 3;
+            
+        }
+        .chat-menu-wrapper, .chat-box-wrapper, .chat-online-wrapper{
+            padding: 10px;
+            height: 100%;
+           }
+    }
 }
