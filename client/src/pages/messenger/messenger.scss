@@ -22,7 +22,39 @@
             flex: 5.5;
             background-color: themed('bgSoft');
             color: themed('textColor');
-            
+
+            .chat-box-wrapper {
+               display: flex;
+               flex-direction: column;
+               justify-content: space-between;
+
+               .chat-box-top {
+                height: 100%;
+                overflow-y: scroll;
+               }
+            .chat-box-bottom {
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                textarea {
+                    width: 80%;
+                    height: 90px;
+                    padding: 10px;
+                }
+
+                button {
+                    width: 70px;
+                    height: 40px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    background: teal;
+                    color: white;
+                }
+            }
+        }
         }
         .chat-online{
             flex: 3;
