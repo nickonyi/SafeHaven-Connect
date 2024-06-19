@@ -49,7 +49,9 @@ const {isLoading, error, data}= useQuery({
         </div>
         <div className="right">
           <PersonOutlinedIcon />
-          <EmailOutlinedIcon />
+          <Link to={`/messenger`} style={{textDecoration:'none',color:'inherit'}}>
+            <EmailOutlinedIcon />
+          </Link>
           <NotificationsOutlinedIcon />
           <Link to={`/Profile/${data.id}`} style={{textDecoration:'none',color:'inherit'}}>
           <div className="user">
