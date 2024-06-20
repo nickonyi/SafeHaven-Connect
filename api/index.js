@@ -62,7 +62,7 @@ app.use('/api/stories',storyRoutes);
 app.use('/api/relationships',relationshipRoutes);
 app.use('/api/lastActive',lastUserRoutes);
 app.use('/api/conversations',conversationRoutes);
-app.use('/api/message',messageRoutes);
+app.use('/api/messages',messageRoutes);
 
 
 

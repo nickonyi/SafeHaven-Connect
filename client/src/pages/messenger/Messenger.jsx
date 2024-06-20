@@ -2,22 +2,41 @@ import './messenger.scss'
 import Conversation from '../../components/conversation/Conversation'
 import Message from '../../components/message/Message'
 import ChatOnline from '../../components/chatOnline/ChatOnline'
+import { useContext,useEffect,useState } from 'react'
+import { AuthContext } from '../../context/AuthContext'
+import { makeRequest } from '../../axios';
+
 
 
 
 function Messenger() {
 
+    const {currentUser} = useContext(AuthContext);
+    const userId = currentUser.id;
+    const [conversations, setConversations] = useState([]);  
     
+    
+    
+    useEffect(() => {
+      const fetchData = async () => {
+        const res = await makeRequest.get('/conversations/' + userId);
+        setConversations(res.data);
+      };
+      fetchData();
+    }, [userId]);
+    
+  
   return (
     <>
         <div className='messenger'>
           <div className="chat-menu">
             <div className="chat-menu-wrapper">
               <input placeholder='search for friends' type="text" className="chat-menu-input" />
-              <Conversation />
-              <Conversation />
-              <Conversation />
-              <Conversation />
+              {conversations.map((c) => (
+                   <Conversation conversation ={c} currentUser ={currentUser}  />
+              ))}
+              
+              
             </div>
           </div>
           <div className="chat-box">
@@ -44,6 +63,7 @@ function Messenger() {
           </div>
         </div>
     </>
+  
     
   )
 }

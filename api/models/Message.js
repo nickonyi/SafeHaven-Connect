@@ -3,13 +3,13 @@ import mongoose from 'mongoose';
 const MessageSchema = mongoose.Schema(
     {
     conversationId: {
-        type: string
+        type: String
     },
     sender:{
-        type: string
+        type: String
     },
     text :{
-        type: string
+        type: String
     }
     },
     {
