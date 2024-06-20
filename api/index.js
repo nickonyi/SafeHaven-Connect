@@ -7,6 +7,8 @@ import authRoutes from './routes/auth.js';
 import relationshipRoutes from './routes/relationships.js';
 import lastUserRoutes from './routes/lastActive.js';
 import storyRoutes from './routes/stories.js';
+import conversationRoutes from './routes/conversation.js';
+import messageRoutes from './routes/message.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import multer from 'multer';
@@ -59,6 +61,8 @@ app.use('/api/auth',authRoutes);
 app.use('/api/stories',storyRoutes);
 app.use('/api/relationships',relationshipRoutes);
 app.use('/api/lastActive',lastUserRoutes);
+app.use('/api/conversations',conversationRoutes);
+app.use('/api/message',messageRoutes);
 
 
 
