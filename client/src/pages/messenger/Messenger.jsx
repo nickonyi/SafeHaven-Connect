@@ -13,10 +13,12 @@ function Messenger() {
 
     const {currentUser} = useContext(AuthContext);
     const userId = currentUser.id;
-    const [conversations, setConversations] = useState([]);  
-    
+    const [conversations, setConversations] = useState([]); 
+    const [currentChat,setCurrentChat] = useState(null);
+    const [messages,setMessages] = useState([]); 
     
     console.log(userId);
+   
     useEffect(() => {
       const fetchData = async () => {
         const res = await makeRequest.get('/conversations/' + userId);
@@ -24,8 +26,26 @@ function Messenger() {
       };
       fetchData();
     }, [userId]);
+
+    useEffect(()=>{
+      const getMessages = async ()=> {
+        try {
+          const res = await makeRequest.get('/messages/' + currentChat._id);
+          setMessages(res.data)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      getMessages();
+    },[currentChat])
     
-    console.log(conversations);
+    console.log(messages);
+
+    if(!messages){
+      return "Loading..."
+    }
+    
   
   return (
     <>
@@ -34,25 +54,35 @@ function Messenger() {
             <div className="chat-menu-wrapper">
               <input placeholder='search for friends' type="text" className="chat-menu-input" />
               {conversations.map((c) => (
+                    <div key={c._id} onClick={()=> setCurrentChat(c)}>
                    <Conversation conversation ={c} currentUser ={currentUser}  />
-              ))}
-              
-              
+                   </div>
+              ))}  
             </div>
           </div>
           <div className="chat-box">
             <div className="chat-box-wrapper">
+              {currentChat ? 
+              <>
               <div className="chat-box-top">
-                <Message/>
-                <Message own={true}/>
-                <Message/>
-                <Message/><Message/><Message/><Message/><Message/><Message/><Message/><Message/><Message/><Message/><Message/>
+                {
+                messages.map((m)=>
+
+                  <div key={m._id}>
+                    <Message message={m} own={m.sender == userId}/>
+                  </div>
+                )
+                }
+                
               </div>
               <div className="chat-box-bottom">
                 <textarea placeholder='write something...'></textarea>
                 <button>Send</button>
               </div>
+              
+              </>: <span>Open a conversation to start a chat!</span>}
             </div>
+            
           </div>
           <div className="chat-online">
             <div className="chat-online-wrapper">

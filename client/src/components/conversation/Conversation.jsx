@@ -6,9 +6,12 @@ import dotenv from 'dotenv';
 function Conversation({conversation, currentUser}) {
 const [user,setUser] = useState(null);
 
+
 useEffect(() => {
   const friendId = conversation.members.find((m) => m !== currentUser.id);
-  console.log(friendId);
+  
+
+  if(friendId){
 
   const getUser = async ()=> {
      try {
@@ -19,19 +22,24 @@ useEffect(() => {
      }
   }
 
+
   getUser();
+}
   
 },[currentUser,conversation])
 
-console.log(user);
+if(!user){
+  return "Loading..."
+}
 
 
-  return (
+  return ( 
     <div className='conversation'>
         <img src={"/uploads/" + user.profilePic} alt="" />
         <span>{user.username}</span>
     </div>
   )
+
 }
 
 export default Conversation
