@@ -16,7 +16,7 @@ function Messenger() {
     const [conversations, setConversations] = useState([]);  
     
     
-    
+    console.log(userId);
     useEffect(() => {
       const fetchData = async () => {
         const res = await makeRequest.get('/conversations/' + userId);
@@ -25,6 +25,7 @@ function Messenger() {
       fetchData();
     }, [userId]);
     
+    console.log(conversations);
   
   return (
     <>
