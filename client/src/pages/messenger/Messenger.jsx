@@ -18,18 +18,21 @@ function Messenger() {
     const [currentChat,setCurrentChat] = useState(null);
     const [messages,setMessages] = useState([]); 
     const [newMessages,setNewMessages] = useState("");
-    const socket = useRef(io("ws://localhost:8900"));
+    const socket = useRef();
     const scrollRef = useRef();
 
-    useEffect(()=>{
-      
+    useEffect (()=> {
+      socket.current = io("ws://localhost:8901");
     },[])
 
     useEffect(()=>{
-      socket?.on("Welcome",(message)=> {
-        console.log(message);
-      })
-    },[socket])
+       socket.current.emit("addUser",userId); 
+       socket.current.on("getUsers",(users)=> {
+        console.log(users);
+       })
+    },[currentUser])
+
+    
     
     
    
