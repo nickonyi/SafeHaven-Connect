@@ -18,15 +18,35 @@ function Messenger() {
     const [currentChat,setCurrentChat] = useState(null);
     const [messages,setMessages] = useState([]); 
     const [newMessages,setNewMessages] = useState("");
+    const [arrivalMessages,setArrivalMessages]= useState(null);
     const socket = useRef();
     const scrollRef = useRef();
 
     useEffect (()=> {
-      socket.current = io("ws://localhost:8901");
+      socket.current = io("ws://localhost:8900");
+      socket.current.on("getMessages",(data)=> {
+        console.log(data);
+        setArrivalMessages({
+          sender:data.senderId,
+          text:data.text,
+          createdAt:Date.now()
+        })
+      })
     },[])
 
+    console.log(arrivalMessages);
+
+   
+
     useEffect(()=>{
-       socket.current.emit("addUser",userId); 
+      arrivalMessages && 
+      currentChat?.members.includes(arrivalMessages.sender) &&
+      setMessages((prev) => [...prev,arrivalMessages])
+    },[arrivalMessages,currentChat])
+
+    useEffect(()=>{
+       socket.current.emit("addUser",userId);
+      
        socket.current.on("getUsers",(users)=> {
         console.log(users);
        })
@@ -45,6 +65,7 @@ function Messenger() {
     }, [userId]);
 
     useEffect(()=>{
+      
       const getMessages = async ()=> {
         try {
           const res = await makeRequest.get('/messages/' + currentChat._id);
@@ -74,6 +95,15 @@ function Messenger() {
         conversationId:currentChat._id
        }
 
+       const receiverId = parseInt(currentChat.members.find((member)=> member !== userId));
+
+       socket.current.emit("sendMessage",{
+        senderId:userId,
+        receiverId,
+        text:newMessages
+       }); 
+      
+
        try {
         const res = await makeRequest.post('/messages',message);
         setMessages([...messages,res.data]);
@@ -84,6 +114,7 @@ function Messenger() {
        }
     }
   
+    
   return (
     <>
         <div className='messenger'>
