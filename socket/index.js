@@ -7,7 +7,7 @@ const io = require("socket.io")(8900,{
 })
 
 let users = [];
-console.log(users);
+
 
 const addUser = (userId,socketId)=> {
     !users.some((user)=> user.userId ===userId) &&
@@ -25,7 +25,7 @@ io.on("connection",(socket)=>{
     //take userid and socket id from user
     socket.on("addUser",(userId)=> {
          addUser(userId,socket.id);
-         console.log(users);
+         
          io.emit("getUsers",users);
 
     })
@@ -34,10 +34,8 @@ io.on("connection",(socket)=>{
     socket.on("sendMessage",({senderId,receiverId,text})=> {
         
         const user = getUser(receiverId);
-        console.log(receiverId);
-        console.log(users);
         console.log(user);
-        
+
         io.to(user.socketId).emit("getMessages",{
              senderId,
              text

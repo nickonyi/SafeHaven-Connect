@@ -25,7 +25,7 @@ function Messenger() {
     useEffect (()=> {
       socket.current = io("ws://localhost:8900");
       socket.current.on("getMessages",(data)=> {
-        console.log(data);
+      
         setArrivalMessages({
           sender:data.senderId,
           text:data.text,
@@ -34,14 +34,16 @@ function Messenger() {
       })
     },[])
 
-    console.log(arrivalMessages);
+   
+    
 
    
 
     useEffect(()=>{
       arrivalMessages && 
-      currentChat?.members.includes(arrivalMessages.sender) &&
+      currentChat?.members.includes((arrivalMessages.sender).toString()) &&
       setMessages((prev) => [...prev,arrivalMessages])
+      
     },[arrivalMessages,currentChat])
 
     useEffect(()=>{
@@ -94,14 +96,17 @@ function Messenger() {
         text:newMessages,
         conversationId:currentChat._id
        }
-
-       const receiverId = parseInt(currentChat.members.find((member)=> member !== userId));
+       
+       
+       const receiverId = parseInt(currentChat.members.find((member)=> parseInt(member) !== userId));
 
        socket.current.emit("sendMessage",{
         senderId:userId,
         receiverId,
         text:newMessages
        }); 
+
+       
       
 
        try {
