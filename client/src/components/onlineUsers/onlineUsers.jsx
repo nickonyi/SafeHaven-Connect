@@ -1,25 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
+import  {io} from 'socket.io-client';
 import {useQuery} from '@tanstack/react-query'
 import { makeRequest } from '../../axios'
 
 
-const OnlineFollowingUsers = ({ userId }) => {
+const OnlineFollowingUsers = ({ userId,currentUser }) => {
+  const [onlineUsers,setOnlineUsers] = useState([]);
+  const [friends,setFriends] = useState([]);
+  const [onlineFriends,setOnlineFriends] = useState([]);
+  const socket = useRef();
+
+
+
+  useEffect (()=> {
+    socket.current = io("ws://localhost:8900");
+    
+  },[])
   
-    const {isLoading, error, data}= useQuery({
-        queryKey: ['onlineUsers'],  
-        queryFn: () =>
-          makeRequest.get('/lastActive/online-users').then((res) => res.data),
+  useEffect(()=>{
+    socket.current.emit("addUser",userId);
+   
+    socket.current.on("getUsers",(users)=> {
+       setOnlineUsers(users);
+    })
+  },[currentUser])
+  
+
+  
+  useEffect(()=>{
+    const getFriends = async ()=> {
+      const res = await makeRequest.get("/relationships/friends/" + userId);
+      setFriends(res.data)
     }
-    )
+  
+    getFriends();
+    },[userId])
+  
+  
+    useEffect(()=>{
+      setOnlineFriends(friends.filter(friend => onlineUsers.some(user => user.userId === friend.id)));
+   
+    },[friends,onlineUsers]);
+  
+    
 
-    console.log(data);
-
-  return (isLoading?"Loading...":
+  
+  return (
     <>
         <div className="item">
         <span>Online friends</span>
       {
-        data.map((user)=>(
+        onlineFriends.map((user)=>(
             <div className="user" key={user.id}>
                  <div className="user-info">
                    <img src={"/uploads/"+ user.profilePic} alt="" />

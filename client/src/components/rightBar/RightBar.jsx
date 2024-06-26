@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext,useRef,useEffect, useState } from 'react';
 import './rightBar.scss'
 import { AuthContext } from '../../context/AuthContext';
 import {useQuery,useMutation,useQueryClient} from '@tanstack/react-query';
@@ -6,10 +6,11 @@ import { makeRequest } from '../../axios';
 import FollowButton from '../followButton/followButton.jsx';
 import OnlineFollowingUsers from '../onlineUsers/onlineUsers.jsx';
 
+
 function RightBar() {
 const {currentUser } = useContext(AuthContext);
-
 const userId = currentUser.id;
+
 
 const {isLoading, error, data}= useQuery({
   queryKey: ['suggestions'],
@@ -55,7 +56,7 @@ const {isLoading:rIsLoading,data:relationshipData}= useQuery({
         )
         }
 
-         <OnlineFollowingUsers userId={userId} />
+         <OnlineFollowingUsers userId={userId} currentUser={currentUser}/>
       
       </div>
     </div>
