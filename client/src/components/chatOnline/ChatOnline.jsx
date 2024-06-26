@@ -1,15 +1,39 @@
+import { useState } from 'react'
 import './chatOnline.scss'
+import { makeRequest } from '../../axios';
+import { useEffect } from 'react';
 
-function ChatOnline() {
+function ChatOnline({onlineUsers,currentId,setCurrentChat}) {
+  const [friends,setFriends] = useState([]);
+  const [onlineFriends,setOnlineFriends] = useState([]);
+
+
+  useEffect(()=>{
+  const getFriends = async ()=> {
+    const res = await makeRequest.get("/relationships/friends/" + currentId);
+    setFriends(res.data)
+  }
+
+  getFriends();
+  },[currentId])
+
+ useEffect(()=>{
+   setOnlineFriends(friends.filter(friend => onlineUsers.some(user => user.userId === friend.id)));
+
+ },[friends,onlineUsers]);
+
+ console.log(onlineFriends);
   return (
     <div className='chatonline'>
-        <div className="chat-online-friend">
-            <div className="chat-online-img-container">
-                <img src="https://images.pexels.com/photos/21050507/pexels-photo-21050507/free-photo-of-a-woman-with-an-umbrella-and-a-black-bag.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" alt="" />
-                <div className="chat-online-badge"></div>
-            </div>
-            <span className="chat-online-name">John Doe</span>
-        </div>
+     { onlineFriends.map((o)=> (
+         <div className="chat-online-friend">
+         <div className="chat-online-img-container">
+             <img src={"/uploads/" + o.profilePic}  alt="" />
+             <div className="chat-online-badge"></div>
+         </div>
+         <span className="chat-online-name">{o.username}</span>
+     </div>
+     ))} 
     </div>
   )
 }

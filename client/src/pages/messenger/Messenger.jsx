@@ -18,6 +18,7 @@ function Messenger() {
     const [currentChat,setCurrentChat] = useState(null);
     const [messages,setMessages] = useState([]); 
     const [newMessages,setNewMessages] = useState("");
+    const [onlineUsers,setOnlineUsers] = useState([]);
     const [arrivalMessages,setArrivalMessages]= useState(null);
     const socket = useRef();
     const scrollRef = useRef();
@@ -50,14 +51,11 @@ function Messenger() {
        socket.current.emit("addUser",userId);
       
        socket.current.on("getUsers",(users)=> {
-        console.log(users);
+        setOnlineUsers(users)
        })
     },[currentUser])
 
-    
-    
-    
-   
+       
     useEffect(() => {
       const fetchData = async () => {
         const res = await makeRequest.get('/conversations/' + userId);
@@ -165,10 +163,11 @@ function Messenger() {
           </div>
           <div className="chat-online">
             <div className="chat-online-wrapper">
-               <ChatOnline/>
-               <ChatOnline/>
-               <ChatOnline/>
-               <ChatOnline/>
+               <ChatOnline
+               onlineUsers={onlineUsers}
+               currentId= {userId}
+               setCurrentChat = {setCurrentChat}
+               />
             </div>
           </div>
         </div>

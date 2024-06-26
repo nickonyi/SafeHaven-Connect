@@ -15,6 +15,21 @@ export const getRelationships = (req,res)=> {
     })
 }
 
+export const getFriends = (req,res)=> {
+    const userId = req.params.userId;
+    const sql = "SELECT u.id, u.username, u.profilePic  FROM users u JOIN relationships r ON u.id = r.followedUserId WHERE r.followerUserId = ?";
+    
+
+    db.query(sql,[userId],(err,data)=>{
+        if(err){
+            return res.status(500).json(err);
+        }
+
+        return res.status(200).json(data);
+    })
+}
+
+
 
 export const addRelationship = (req,res)=> {
     const token = req.cookies.accessToken;
