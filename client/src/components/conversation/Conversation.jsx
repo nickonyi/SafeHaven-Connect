@@ -1,14 +1,14 @@
 import { useState,useEffect } from 'react'
 import { makeRequest } from '../../axios';
 import './Conversation.scss'
-import dotenv from 'dotenv';
 
 function Conversation({conversation, currentUser}) {
 const [user,setUser] = useState(null);
 
 
 useEffect(() => {
-  const friendId = conversation.members.find((m) => m !== currentUser.id);
+  const friendId = conversation.members.find((m) => m !== currentUser.id.toString());
+  console.log(friendId);
   
 
   if(friendId){

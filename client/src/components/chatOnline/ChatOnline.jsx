@@ -22,11 +22,33 @@ function ChatOnline({onlineUsers,currentId,setCurrentChat}) {
 
  },[friends,onlineUsers]);
 
- console.log(onlineFriends);
+ const handleClick = async(user)=> {
+    try {
+       const res = await makeRequest.get(`/conversations/find/${currentId}/${user.id}`)
+       if (res.data) {
+        // Conversation found
+        setCurrentChat(res.data);
+    } else {
+        // Conversation not found, create a new one
+        const newConversation = {
+            senderId: currentId.toString(),
+            receiverId: user.id.toString()
+        };
+        const createRes = await makeRequest.post('/conversations', newConversation);
+        setCurrentChat(createRes.data);
+    }
+    } catch (error) {
+        console.log(error);
+    }
+ }
+
+ 
+
+
   return (
-    <div className='chatonline'>
+    <div className='chatonline' >
      { onlineFriends.map((o)=> (
-         <div className="chat-online-friend">
+         <div className="chat-online-friend" onClick={()=> handleClick(o)}>
          <div className="chat-online-img-container">
              <img src={"/uploads/" + o.profilePic}  alt="" />
              <div className="chat-online-badge"></div>

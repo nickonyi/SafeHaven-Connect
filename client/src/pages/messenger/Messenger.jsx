@@ -26,7 +26,7 @@ function Messenger() {
     useEffect (()=> {
       socket.current = io("ws://localhost:8900");
       socket.current.on("getMessages",(data)=> {
-      
+        
         setArrivalMessages({
           sender:data.senderId,
           text:data.text,
@@ -38,9 +38,9 @@ function Messenger() {
    
     
 
-   
 
     useEffect(()=>{
+     
       arrivalMessages && 
       currentChat?.members.includes((arrivalMessages.sender).toString()) &&
       setMessages((prev) => [...prev,arrivalMessages])
@@ -116,6 +116,8 @@ function Messenger() {
           console.log(error);
        }
     }
+
+    
   
     
   return (
