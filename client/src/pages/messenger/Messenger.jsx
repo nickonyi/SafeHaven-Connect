@@ -35,10 +35,6 @@ function Messenger() {
       })
     },[])
 
-   
-    
-
-
     useEffect(()=>{
      
       arrivalMessages && 
@@ -48,13 +44,12 @@ function Messenger() {
     },[arrivalMessages,currentChat])
 
     useEffect(()=>{
-       socket.current.emit("addUser",userId);
-      
-       socket.current.on("getUsers",(users)=> {
-        setOnlineUsers(users)
-       })
-    },[currentUser])
-
+      socket.current.emit("addUser",userId);
+     
+      socket.current.on("getUsers",(users)=> {
+       setOnlineUsers(users)
+      })
+   },[currentUser])
        
     useEffect(() => {
       const fetchData = async () => {

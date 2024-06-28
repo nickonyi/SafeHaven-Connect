@@ -25,10 +25,7 @@ const OnlineFollowingUsers = ({ userId,currentUser }) => {
     })
   },[currentUser])
 
-  console.log(onlineUsers);
   
- 
-  console.log(onlineFriends);
   
   useEffect(()=>{
     const getFriends = async ()=> {
@@ -39,15 +36,14 @@ const OnlineFollowingUsers = ({ userId,currentUser }) => {
     getFriends();
     },[userId])
 
-    console.log(friends);
+    
   
   
     useEffect(()=>{
       setOnlineFriends(friends.filter(friend => onlineUsers.some(user => user.userId === friend.id)));
    
     },[friends,onlineUsers]);
-
-    console.log(onlineFriends);
+  
   
     
 
