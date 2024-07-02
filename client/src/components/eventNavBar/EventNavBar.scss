@@ -1,0 +1,86 @@
+@import '../../app.scss'; 
+.header {
+    @include themify($themes){
+    position: sticky;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background-color: themed('bgColor');
+    border-bottom: 1px solid lightgray;
+    
+
+    .nav {
+        display: flex;
+        align-items: center;
+        gap:450px;
+        padding: 20px 5px 10px 5px;
+        width: 85%;
+        margin: auto;
+        position: relative;
+        z-index: 1000;
+
+        @include tablet {
+            gap:150px;
+           }
+
+           @include mobile {
+            justify-content: space-between;
+           }
+        div {
+          span  {
+            font-weight: bold;
+            font-size: 20px;
+            color: themed('logo');
+
+            @include mobile {
+                font-size: 16px;
+               }
+        }
+        }
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            list-style-type: none;
+            justify-content: center;
+            color: themed('textColor');
+            @include mobile {
+                display: none;
+               }
+            
+            .a {
+                text-decoration: none;
+
+                li {
+                    color: themed('textColor');
+                }
+            }
+
+            .common-link-style {
+                font-size: 17px;
+                font-weight: 600;
+                font-style: normal;
+                line-height: 24px;
+
+                @include mobile {
+                    font-size: 14px;
+                   }
+            }
+
+            .common-link-style :hover {
+                color: #2f6ecc;
+            }
+        }
+
+        .menu {
+            display: none;
+            @include mobile {
+                display: block;
+               }
+        }
+        
+    }
+
+}
+}
