@@ -1,12 +1,15 @@
 import LeftBar from "./components/leftBar/LeftBar";
 import NavBar from "./components/navBar/NavBar";
 import RightBar from "./components/rightBar/RightBar";
+import EventNavBar from "./components/eventNavBar/EventNavBar";
 import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
 import Messenger from "./pages/messenger/Messenger";
-import Events from "./pages/Events/Events";
+import Horizontal from "./routes/horizontal/Horizontal";
+import LandingPage from "./routes/landingPage/LandingPage";
+import Vertical from "./routes/vertical/Vertical";
 import './app.scss'
 import {
   createBrowserRouter,
@@ -22,11 +25,14 @@ import {
 import { useContext } from "react";
 import { DarkModeContext } from "./context/DarkModeContext";
 import { AuthContext } from "./context/AuthContext";
+import { EventProvider} from "./context/EventContext";
+
 
 function App() {
 
   const {darkMode} = useContext(DarkModeContext);
   const {currentUser}= useContext(AuthContext);
+ 
 
  
 
@@ -57,6 +63,20 @@ function App() {
       <QueryClientProvider client ={queryClient}>
       <div className={`theme-${darkMode?"dark":"light"}`}>
         <NavBar />
+        <div style={{flex:6}}>
+          <Outlet />
+        </div>
+        </div>
+        </QueryClientProvider>
+
+    )
+  }
+
+  const EventLayout = ()=> {
+    return (
+      <QueryClientProvider client ={queryClient}>
+      <div className={`theme-${darkMode?"dark":"light"}`}>
+        <EventNavBar />
         <div style={{flex:6}}>
           <Outlet />
         </div>
@@ -116,7 +136,28 @@ function App() {
     },
     {
       path: "/Events",
-      element: <Events />
+      element: (
+        <ProtectedLayout>
+           <EventProvider>
+             <EventLayout />
+           </EventProvider>
+        </ProtectedLayout>
+      
+      ),
+      children:[
+        {
+        path: '/Events',
+        element: <LandingPage />,
+      },
+      {
+        path: '/Events/horizontal',
+        element: <Horizontal />,
+      },
+      {
+        path: '/Events/vertical',
+        element: <Vertical />,
+      }
+      ]
     },
   ]);
 
