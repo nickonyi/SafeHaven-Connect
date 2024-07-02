@@ -6,6 +6,7 @@ import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
 import Messenger from "./pages/messenger/Messenger";
+import Events from "./pages/Events/Events";
 import './app.scss'
 import {
   createBrowserRouter,
@@ -112,6 +113,10 @@ function App() {
     {
       path: "/Register",
       element: <Register />
+    },
+    {
+      path: "/Events",
+      element: <Events />
     },
   ]);
 
