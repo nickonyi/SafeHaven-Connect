@@ -41,16 +41,16 @@ const {isLoading, error, data}= useQuery({
            <img src={isLoading?"":"/uploads/" + data.profilePic} alt="" />
             <span>{isLoading?"":data.username}</span>
           </div>
-          <Link to={`/Events`} style={{textDecoration:'none',color:'inherit'}}>
-          <div className="item">
-            <img src={Events} alt="" />
-            <span>Events</span>
-          </div>
-          </Link>
           <Link to={`/messenger`} style={{textDecoration:'none',color:'inherit'}}>
           <div className="item">
             <img src={Messages} alt="" />
             <span>Messages</span>
+          </div>
+          </Link>
+          <Link to={`/Events`} style={{textDecoration:'none',color:'inherit'}}>
+          <div className="item">
+            <img src={Events} alt="" />
+            <span>Events</span>
           </div>
           </Link>
           <div className="item">

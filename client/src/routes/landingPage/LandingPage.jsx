@@ -1,8 +1,10 @@
-import './LandingPage.scss'
+import EventHomePage from "../../components/eventHomePage/EventHomePage"
 
 function LandingPage() {
   return (
-    <div>LandingPage</div>
+    <div>
+       <EventHomePage />
+    </div>
   )
 }
 

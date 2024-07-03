@@ -25,6 +25,7 @@
 
            @include mobile {
             justify-content: space-between;
+            width: 100%
            }
         div {
           span  {
@@ -72,11 +73,27 @@
                 color: #2f6ecc;
             }
         }
+        
+        .nav-visible {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            padding: 20px 10px;
+            margin: 0;
+            top: 60px;
+            z-index: 500;
+            background-color: themed('bgColor');
+            color: themed('textColor');
+        }
 
         .menu {
             display: none;
+            
             @include mobile {
                 display: block;
+                background-color: themed('bgColor');
                }
         }
         
