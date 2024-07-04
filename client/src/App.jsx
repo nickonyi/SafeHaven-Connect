@@ -7,9 +7,7 @@ import Register from "./pages/Register/Register"
 import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
 import Messenger from "./pages/messenger/Messenger";
-import Horizontal from "./routes/horizontal/Horizontal";
 import LandingPage from "./routes/landingPage/LandingPage";
-import Vertical from "./routes/vertical/Vertical";
 import './app.scss'
 import {
   createBrowserRouter,
@@ -26,6 +24,8 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/DarkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import { EventProvider} from "./context/EventContext";
+import EventsPage from "./pages/eventsPage/EventsPage";
+import CreateEvent from "./pages/createEvent/CreateEvent";
 
 
 function App() {
@@ -150,12 +150,12 @@ function App() {
         element: <LandingPage />,
       },
       {
-        path: '/Events/horizontal',
-        element: <Horizontal />,
+        path: '/Events/horizontal/event',
+        element:<EventsPage /> 
       },
       {
-        path: '/Events/vertical',
-        element: <Vertical />,
+        path: '/Events/vertical/createEvent',
+        element:<CreateEvent /> 
       }
       ]
     },

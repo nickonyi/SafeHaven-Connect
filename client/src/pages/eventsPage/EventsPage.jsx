@@ -1,0 +1,9 @@
+import './EventsPage.scss'
+
+function EventsPage() {
+  return (
+    <div>EventsPage</div>
+  )
+}
+
+export default EventsPage
