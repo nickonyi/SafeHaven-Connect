@@ -1,0 +1,64 @@
+@import '../../app.scss';
+
+.container-style {
+    height: 40vh;
+    width: 100%;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('../../assets/pexels-jack-davis-86003658-9069564.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 40px;
+    padding-left: 120px;
+    line-height: 0;
+
+    @include mobile {
+        height: 20vh;
+        padding-top: 10px;
+      }
+
+      @include tablet {
+        height: 15vh;
+        padding-top: 10px;
+      }
+
+    ul {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        list-style-type: none;
+        margin-top: 10px;
+        padding: 0;
+
+        @include mobile {
+            margin-top: 0;
+          }
+
+        li {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 400;
+            font-style: normal;
+            color: #ffffff;
+        }
+    }
+}
+
+.title-style {
+    font-size: 70px;
+    line-height: 80px;
+    font-weight: 700;
+    font-style: normal;
+    color: #ffffff;
+
+    @include mobile {
+        font-size: 30px;
+      }
+
+      @include tablet {
+        font-size: 40px;
+      }
+}
+
+
+.a {
+    text-decoration: none;
+}
