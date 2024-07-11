@@ -22,7 +22,7 @@ function EventNavBar() {
                <ul className={`${isNavVisible? 'nav-visible':''}`}>
                <Link className="a common-link-style" to="/Events"><li>Home</li></Link>
                <Link className="a common-link-style" to="/Events/horizontal/event"><li>Event</li></Link>
-               <Link className="a common-link-style" to="/Events/vertical/createEvent"><li>Post an Event</li></Link>
+               <Link className="a common-link-style" to="/Events/vertical/postEvent"><li>Post an Event</li></Link>
                 </ul> 
 
           <div className="menu">

@@ -25,7 +25,7 @@ import { DarkModeContext } from "./context/DarkModeContext";
 import { AuthContext } from "./context/AuthContext";
 import { EventProvider} from "./context/EventContext";
 import EventsPage from "./pages/eventsPage/EventsPage";
-import CreateEvent from "./pages/createEvent/CreateEvent";
+import PostEvent from "./pages/postEvent/PostEvent";
 
 
 function App() {
@@ -154,8 +154,8 @@ function App() {
         element:<EventsPage /> 
       },
       {
-        path: '/Events/vertical/createEvent',
-        element:<CreateEvent /> 
+        path: '/Events/vertical/postEvent',
+        element:<PostEvent /> 
       }
       ]
     },
