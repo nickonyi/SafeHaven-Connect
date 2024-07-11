@@ -9,8 +9,6 @@ function CreateEvent() {
   return (
     <div>
       <NavigationMenu />
-      
-      { currentUser && <div>CreateEvent</div>}
     </div>
   )
 }
