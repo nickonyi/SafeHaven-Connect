@@ -13,10 +13,10 @@ function NavigationMenu() {
     <div className='nav'>
        <ul>
         <p>Main</p>
-        <Link className='a' to="/vertical/createEvent">
+        <Link className='a' to="/Events/vertical/postEvent">
           <li> <AddIcon className='icon' /> Post an Event</li>
         </Link>
-        <Link className='a' to="/vertical/createTicket">
+        <Link className='a' to="/Events/vertical/createTicket">
           <li><ListIcon/>Create Ticket</li>
         </Link>
         <Link className='a' to="/vertical/manageevent">

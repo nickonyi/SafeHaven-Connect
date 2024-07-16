@@ -1,0 +1,86 @@
+.vertical {
+    display: flex;
+}
+
+.body {
+    padding: 20px;
+}
+
+.event {
+    background-color: #ffffff;
+    padding: 20px;
+
+    h1 {
+        color: rgb(77, 77, 77);
+        font-size: 30px;
+        font-weight: 600;
+        padding-bottom:20px ;
+    }
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.formGroup {
+    flex: 1;
+    margin-right: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(77, 77, 77);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#name,
+#location,
+#venue,
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    outline: none;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+
+select{
+    outline: none;
+    font-size: 13px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    color: rgb(77, 77, 77);
+}
+
+button {
+    background-color: #628af7;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+}

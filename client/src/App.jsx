@@ -26,6 +26,7 @@ import { AuthContext } from "./context/AuthContext";
 import { EventProvider} from "./context/EventContext";
 import EventsPage from "./pages/eventsPage/EventsPage";
 import PostEvent from "./pages/postEvent/PostEvent";
+import CreateTicket from "./pages/createTicket/CreateTicket";
 
 
 function App() {
@@ -156,6 +157,10 @@ function App() {
       {
         path: '/Events/vertical/postEvent',
         element:<PostEvent /> 
+      },
+      {
+        path: '/Events/vertical/createTicket',
+        element:<CreateTicket /> 
       }
       ]
     },
