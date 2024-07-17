@@ -6,6 +6,7 @@ import axios from 'axios';
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
+    const [token,setToken] = useState(localStorage.getItem('token') || null);
     const [currentUser,setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
 
     
@@ -15,14 +16,16 @@ export const AuthContextProvider = ({ children }) => {
         withCredentials:true,
        });
 
-       setCurrentUser(res.data);
+       setCurrentUser(res.data.other);
+       setToken(res.data.token)
     }
     useEffect(() => {
         localStorage.setItem('user',JSON.stringify(currentUser));
-    }, [currentUser]);
+        localStorage.setItem('token',JSON.stringify(token));
+    }, [currentUser,token]);
 
     return (
-        <AuthContext.Provider value={{currentUser,login}}>
+        <AuthContext.Provider value={{currentUser,login,token}}>
            {children}
         </AuthContext.Provider>
     )

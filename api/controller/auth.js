@@ -58,14 +58,19 @@ export const login = (req,res)=> {
         }
         db.query('UPDATE users SET is_online = TRUE WHERE id = ?', [result[0].id]);
         const token = jwt.sign({id:result[0].id},'secretkey');
+        console.log(token);
 
         const {password,confirmPassword, ...other} = result[0];
+        console.log(other);
          res.
          cookie('accessToken',token,{
             httpOnly:true,
          }).
          status(200).
-         json(other);
+         json({
+            other,
+            token
+        });
 
     });
 }

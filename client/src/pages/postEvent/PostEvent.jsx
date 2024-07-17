@@ -4,20 +4,25 @@ import { useContext } from 'react';
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu';
 import { useState } from 'react';
 import InfoMessage from '../../components/infoMessage/InfoMessage';
+import { EventContext } from '../../context/EventContext';
 
 
 function PostEvent() {
   const {currentUser} = useContext(AuthContext);
+  const {token} = useContext(AuthContext);
+  const {createEvent} = useContext(EventContext);
   const [message, setMessage] = useState({ content: '', status: '' });
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    category: '',
     location: '',
     date: '',
     venue: '',
     image: null,
     description: '',
   });  
+
+  
 
   const handleChange = (e)=> {
      const {name,value}=e.target
@@ -54,6 +59,10 @@ function PostEvent() {
      if(!validateForm()){
       return;
      }
+     console.log(isLoading);
+     setIsLoading(true);
+     console.log(isLoading);
+     await createEvent({formData,token});
   }
   
   return (

@@ -5,9 +5,14 @@ import {  createContext } from "react"
 export const EventContext = createContext();
 
 export const EventProvider = ({children})=> {
-    const values = {}
+
+  const createEvent = async({formData,token})=> {
+      console.log(formData);
+      console.log(JSON.parse(token));
+  }
+    const values = {createEvent}
     return (
-      <EventContext.Provider values={values}>
+      <EventContext.Provider value={values}>
           {children}
       </EventContext.Provider>
     )
