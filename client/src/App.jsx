@@ -27,6 +27,10 @@ import { EventProvider} from "./context/EventContext";
 import EventsPage from "./pages/eventsPage/EventsPage";
 import PostEvent from "./pages/postEvent/PostEvent";
 import CreateTicket from "./pages/createTicket/CreateTicket";
+import ManageEvent from "./pages/manageEvent/ManageEvent";
+import ManageRegistration from "./pages/manageRegistration/ManageRegistration";
+import TransactionsPage from "./pages/transactionsPage/TransactionsPage";
+import JoinEvent from "./pages/joinEvent/JoinEvent";
 
 
 function App() {
@@ -161,6 +165,22 @@ function App() {
       {
         path: '/Events/vertical/createTicket',
         element:<CreateTicket /> 
+      },
+      {
+        path: '/Events/vertical/manageEvent',
+        element: <ManageEvent />
+      },
+      {
+        path: '/Events/vertical/manageregistration',
+        element: <ManageRegistration />
+      }, 
+      {
+        path: '/Events/vertical/transaction',
+        element: <TransactionsPage />
+      },
+      {
+        path: '/Events/vertical/joinevent',
+        element: <JoinEvent />
       }
       ]
     },

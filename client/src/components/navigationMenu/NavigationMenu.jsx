@@ -19,16 +19,16 @@ function NavigationMenu() {
         <Link className='a' to="/Events/vertical/createTicket">
           <li><ListIcon/>Create Ticket</li>
         </Link>
-        <Link className='a' to="/vertical/manageevent">
+        <Link className='a' to="/Events/vertical/manageEvent">
           <li><ElevatorOutlinedIcon /> Manage Event</li>
         </Link>
-        <Link className='a' to="/vertical/manageregistration">
+        <Link className='a' to="/Events/vertical/manageregistration">
           <li><AppRegistrationIcon/>Manage Registration</li>
         </Link>
-        <Link className='a' to="/vertical/transaction">
+        <Link className='a' to="/Events/vertical/transaction">
           <li><AppRegistrationIcon/>Transaction</li>
         </Link>
-        <Link className='a' to="/vertical/joinevent">
+        <Link className='a' to="/Events/vertical/joinevent">
           <li><AspectRatioIcon/>Joined Event</li>
         </Link>
       </ul>
