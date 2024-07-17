@@ -37,12 +37,6 @@ function App() {
 
   const {darkMode} = useContext(DarkModeContext);
   const {currentUser}= useContext(AuthContext);
- 
-
- 
-
-  
-
   const queryClient = new QueryClient();
 
  

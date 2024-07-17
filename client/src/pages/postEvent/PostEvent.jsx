@@ -2,23 +2,59 @@ import './PostEvent.scss'
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from 'react';
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu';
+import { useState } from 'react';
+import InfoMessage from '../../components/infoMessage/InfoMessage';
+
 
 function PostEvent() {
   const {currentUser} = useContext(AuthContext);
+  const [message, setMessage] = useState({ content: '', status: '' });
+  const [formData, setFormData] = useState({
+    name: '',
+    category: '',
+    location: '',
+    date: '',
+    venue: '',
+    image: null,
+    description: '',
+  });  
 
-  const handleSubmit = ()=> {
-
+  const handleChange = (e)=> {
+     const {name,value}=e.target
+     setFormData ((prev)=> ({
+      ...prev,
+      [name]:value
+     }))
   }
 
-  const formData = {
-    category:"",
+  const handleFileChange = (e)=> {
+    const imageFile = e.target.files[0];
+    setFormData((prev)=> ({
+      ...prev,
+      image:imageFile
+    }))
   }
 
-  const handleChange = ()=> {
+  const validateForm = ()=> {
+    const areAllFieldsfilled = Object.values(formData).every((value)=> {
+       if(typeof value === 'string') return value.trim() !== '';
+       return value !== null;
+    })
 
+    if(!areAllFieldsfilled){
+      setMessage({ content: 'Please fill in all fields.', status: 'fail' });
+    }
+
+    return areAllFieldsfilled;
   }
 
-  const handleFileChange = ()=> {}
+  const handleSubmit = async (e)=> {
+     e.preventDefault();
+
+     if(!validateForm()){
+      return;
+     }
+  }
   
   return (
     <div className='vertical'>
@@ -60,6 +96,7 @@ function PostEvent() {
           <span>Post an event</span>
         </button>
       </form>
+      {message.content && <InfoMessage content={message.content} status={message.status} />}
     </div>
     </div>
   )

@@ -1,0 +1,57 @@
+@keyframes slideIn {
+    from {
+      right: -300px;
+      opacity: 0;
+    }
+  
+    to {
+      right: 20px;
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      right: 20px;
+      opacity: 1;
+    }
+  
+    to {
+      right: -300px;
+      opacity: 0;
+    }
+  }
+  
+  .message {
+    position: fixed;
+    z-index: 2000;
+    top: 100px;
+    right: 20px;
+    padding: 10px 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: start;
+    animation: slideIn 0.5s forwards;
+  }
+  
+  .message.hide {
+    animation: slideOut 0.5s forwards;
+  }
+  
+  .success {
+    background-color: rgb(59,183,94);
+    color: white;
+  }
+  
+  .fail {
+    background-color: rgb(212, 52, 43);
+    color: white;
+  }
+  
+  .content {
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 24px;
+    font-family: "Poppins", sans-serif;
+  }

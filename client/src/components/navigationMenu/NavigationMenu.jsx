@@ -34,9 +34,6 @@ function NavigationMenu() {
       </ul>
       <ul>
         <p>Account</p>
-        <Link className='a' to="/vertical/editprofile">
-          <li><PersonIcon/>Edit Profile</li>
-        </Link>
         <Link className='a' to={"/"}> 
           <li><ExitToAppIcon />Logout</li>
         </Link>
