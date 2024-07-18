@@ -13,7 +13,7 @@ export const EventProvider = ({children})=> {
    try {
       const response = await makeRequest.post(`${apiUrl}/event/createEvent`,formData,{
         headers: {
-          'Content-Type': 'multipart/form-data'
+         'Content-Type': 'multipart/form-data',
       }
       });
       return response.data.message;

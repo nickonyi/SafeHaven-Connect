@@ -1,9 +1,17 @@
 import Event from "./../models/Event.js";
+import jwt from "jsonwebtoken"
 import { multerUploads, dataUri,uploader, cloudinaryConfig } from '../middlewares/cloudinary.js';
 
 export const creatEvent = async (req,res,next)=> {
   
    try {
+
+    const token = req.cookies.accessToken;
+    console.log(token);
+    
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",(err,userInfo)=> {
+      
      multerUploads(req,res,async function (err){
          if(err){
           return res.status(400).json({
@@ -36,7 +44,7 @@ export const creatEvent = async (req,res,next)=> {
             description,
             date: eventDate,
             location,
-            createdBy: "12",
+            createdBy: userInfo.id,
             image,
             venue
         });
@@ -48,7 +56,8 @@ export const creatEvent = async (req,res,next)=> {
         });
          
      })
-   } catch (error) {
+   });
+  } catch (error) {
        next(error)
    }
   
