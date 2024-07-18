@@ -17,18 +17,12 @@ const eventSchema = new Schema({
         type: String,
         required: true 
     },
-    category: {
-        type: String,
-        enum: ['sport', 'travel', 'conference', 'business', 'festival', 'music'],
-        required: true
-    },
     venue: {
         type: String,
         required: true
     },
     createdBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true
     },
     image: { 
@@ -38,4 +32,4 @@ const eventSchema = new Schema({
 });
 
 const Event = mongoose.model('Event', eventSchema);
-module.exports = Event;
+export default Event;

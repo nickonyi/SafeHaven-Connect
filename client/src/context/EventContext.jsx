@@ -11,7 +11,11 @@ export const EventProvider = ({children})=> {
 
   const createEvent = async({formData,token})=> {
    try {
-      const response = await makeRequest.post(`${apiUrl}/event/createEvent`,formData);
+      const response = await makeRequest.post(`${apiUrl}/event/createEvent`,formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+      }
+      });
       return response.data.message;
    } catch (error) {
       const errorMessage = error.response?.data?.message;

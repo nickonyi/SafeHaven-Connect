@@ -59,9 +59,9 @@ function PostEvent() {
      if(!validateForm()){
       return;
      }
-     console.log(isLoading);
+   
      setIsLoading(true);
-     console.log(isLoading);
+     console.log(formData);
      await createEvent({formData,token});
   }
   
@@ -69,7 +69,7 @@ function PostEvent() {
     <div className='vertical'>
       <NavigationMenu />
       <div className='body'>
-      <form className="event shadow-lg" onSubmit={handleSubmit}>
+      <form className="event shadow-lg" onSubmit={handleSubmit} encType="multipart/form-data">
         <h1>Post an event</h1>
         <div className="flex">
           <div className="formGroup">
