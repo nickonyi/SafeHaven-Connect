@@ -1,6 +1,7 @@
 import {  createContext } from "react"
 import { makeRequest } from '../axios';
 import { useState } from "react";
+import InfoMessage from "../components/infoMessage/InfoMessage";
 
 
 export const EventContext = createContext();
@@ -16,7 +17,7 @@ export const EventProvider = ({children})=> {
          'Content-Type': 'multipart/form-data',
       }
       });
-      return response.data.message;
+      setMessage({ content: response.data.message, status: response.data.status });
    } catch (error) {
       const errorMessage = error.response?.data?.message;
       setMessage({content:errorMessage,status:'fail'});
@@ -26,6 +27,7 @@ export const EventProvider = ({children})=> {
     return (
       <EventContext.Provider value={values}>
           {children}
+          {message.content && <InfoMessage content={message.content} status={message.status} />}
       </EventContext.Provider>
     )
 }

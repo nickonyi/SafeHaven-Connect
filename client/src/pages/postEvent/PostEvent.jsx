@@ -5,6 +5,7 @@ import NavigationMenu from '../../components/navigationMenu/NavigationMenu';
 import { useState } from 'react';
 import InfoMessage from '../../components/infoMessage/InfoMessage';
 import { EventContext } from '../../context/EventContext';
+import Loading from '../../components/loading/Loading';
 
 
 function PostEvent() {
@@ -61,8 +62,18 @@ function PostEvent() {
      }
    
      setIsLoading(true);
-     console.log(formData);
      await createEvent({formData,token});
+     setIsLoading(false);
+
+     setFormData({
+      name: '',
+      category: '',
+      location: '',
+      date: '',
+      venue: '',
+      image: null,
+      description: '',
+    });
   }
   
   return (
@@ -102,7 +113,11 @@ function PostEvent() {
           <textarea id="description" name="description" placeholder='Description' rows="4" value={formData.description} onChange={handleChange}></textarea>
         </div>
         <button className="gap-2 d-flex align-items-center" type="submit">
-          <span>Post an event</span>
+        {isLoading ? (
+            <Loading />
+          ) : (
+            <span>Post an event</span>
+          )}
         </button>
       </form>
       {message.content && <InfoMessage content={message.content} status={message.status} />}
