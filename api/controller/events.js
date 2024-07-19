@@ -7,7 +7,7 @@ export const creatEvent = async (req,res,next)=> {
    try {
 
     const token = req.cookies.accessToken;
-    console.log(token);
+    
     
     if(!token) return res.status(401).json('Not logged in!');
     jwt.verify(token,"secretkey",(err,userInfo)=> {

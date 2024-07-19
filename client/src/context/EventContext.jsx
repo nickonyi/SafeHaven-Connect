@@ -8,9 +8,10 @@ export const EventContext = createContext();
 
 export const EventProvider = ({children})=> {
   const [message, setMessage] = useState({ content: "", status: "" });
+  const [event, setEvent] = useState();
   const apiUrl = import.meta.env.VITE_apiUrl;
 
-  const createEvent = async({formData,token})=> {
+  const createEvent = async({formData})=> {
    try {
       const response = await makeRequest.post(`${apiUrl}/event/createEvent`,formData,{
         headers: {
@@ -23,7 +24,30 @@ export const EventProvider = ({children})=> {
       setMessage({content:errorMessage,status:'fail'});
    }   
   }
-    const values = {createEvent}
+
+  const getUserEvent = async () => {
+       try {
+          const response = await makeRequest.get(`${apiUrl}/users/my-events`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+       });
+       
+       
+       setEvent(response.data.events);
+       console.log(response.data.events);
+       
+       return response.data;
+       } catch (error) {
+        const errorMessage = error.response?.data?.message;
+        setMessage({content:errorMessage,status:'fail'});
+        
+       }
+  }
+  
+  
+    console.log(event);
+    const values = {createEvent,getUserEvent,event}
     return (
       <EventContext.Provider value={values}>
           {children}

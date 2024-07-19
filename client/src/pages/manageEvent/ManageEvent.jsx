@@ -1,12 +1,41 @@
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu'
 import './ManageEvent.scss'
-import { Card, Modal } from 'react-bootstrap';
-import { useState } from 'react';
+import { Card, Modal,Spinner } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { EventContext } from '../../context/EventContext';
+import moment from 'moment';
+
 
 function ManageEvent() {
+ const [events, setEvents] = useState([]);
+ const [loading,setLoading] = useState(true);
+ const [selectedEvent, setSelectedEvent] = useState(null);
+ const [selectedTicket, setSelectedTicket] = useState(null);
+ const {getUserEvent,event} = useContext(EventContext);
 
-    const event = [];
+
+ useEffect(()=>{
+    fetchEvents();
+    console.log(event);
+ },[])
+
+const fetchEvents = async () => {
+    try {
+        setLoading(true);
+        await getUserEvent();
+        const fetchedEvents = event || [];
+        setEvents(fetchedEvents);
+        setLoading(false);
+
+        
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        setLoading(false);  
+    }
+}
+  
+
     if (!event || event.length === 0) {
         return (
             <div className='manage-event'>

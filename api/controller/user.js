@@ -1,5 +1,6 @@
 import { db } from "./connect.js";
 import jwt from "jsonwebtoken";
+import Event from "../models/Event.js";
 
 export const getUser = (req, res) => {
  const userId = req.params.userId;
@@ -46,4 +47,31 @@ export const updateUser = (req,res)=> {
             return res.status(404).json("Update only your post!");
         })
     })
+}
+
+export const getUserEvents = async (req,res,next)=> {
+
+  try {
+    const token = req.cookies.accessToken;
+   
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",async (err,userInfo)=> {
+        if(err) return res.status(403).json('Invalid token!');
+
+        const userId = userInfo.id;
+        const userEvents = await Event.find({ createdBy: userId });
+        
+        res.status(200).json({
+            status: "success",
+            message: "User's events fetched successfully",
+            result: userEvents,
+            events: userEvents
+        });
+    });
+  } catch (error) {
+    console.error('Error fetching user events:', error);
+        next(error);
+  }
+
+
 }

@@ -10,7 +10,6 @@ import Loading from '../../components/loading/Loading';
 
 function PostEvent() {
   const {currentUser} = useContext(AuthContext);
-  const {token} = useContext(AuthContext);
   const {createEvent} = useContext(EventContext);
   const [message, setMessage] = useState({ content: '', status: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +61,7 @@ function PostEvent() {
      }
    
      setIsLoading(true);
-     await createEvent({formData,token});
+     await createEvent({formData});
      setIsLoading(false);
 
      setFormData({
