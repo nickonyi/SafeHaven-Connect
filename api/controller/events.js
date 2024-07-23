@@ -63,3 +63,19 @@ export const creatEvent = async (req,res,next)=> {
   
 
 }
+
+export const updateEvents = async (req,res,next)=> {
+    try {
+      const token = req.cookies.accessToken;
+
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",(err,userInfo)=> {
+      const userId = userInfo.id;
+      const eventId = req.params.id;
+      console.log(eventId);
+    });
+    } catch (error) {
+        console.error('Error updating event:', error);
+        next(error);
+    }
+}
