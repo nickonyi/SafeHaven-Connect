@@ -19,7 +19,7 @@ function InfoMessage({content,status}) {
      }
 
   return (
-    <div className={`message ${status} ${isVisible ? '' : 'hide'}`}>
+    <div className={`message-info ${status} ${isVisible ? '' : 'hide'}`}>
       <div className="content">{content}</div>
     </div>
   )

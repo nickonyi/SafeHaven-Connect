@@ -22,7 +22,7 @@
     }
   }
   
-  .message {
+  .message-info {
     position: fixed;
     z-index: 2000;
     top: 100px;
@@ -34,7 +34,7 @@
     animation: slideIn 0.5s forwards;
   }
   
-  .message.hide {
+  .message-info.hide {
     animation: slideOut 0.5s forwards;
   }
   

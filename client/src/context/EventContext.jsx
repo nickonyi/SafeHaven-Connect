@@ -32,10 +32,8 @@ export const EventProvider = ({children})=> {
                     'Content-Type': 'application/json',
                 }
        });
-       
-       
+              
        setEvent(response.data.events);
-       console.log(response.data.events);
        
        return response.data;
        } catch (error) {
@@ -46,7 +44,7 @@ export const EventProvider = ({children})=> {
   }
   
   
-    console.log(event);
+    
     const values = {createEvent,getUserEvent,event}
     return (
       <EventContext.Provider value={values}>

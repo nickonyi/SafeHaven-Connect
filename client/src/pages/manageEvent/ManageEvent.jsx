@@ -14,10 +14,9 @@ function ManageEvent() {
  const [selectedTicket, setSelectedTicket] = useState(null);
  const {getUserEvent,event} = useContext(EventContext);
 
-
+ 
  useEffect(()=>{
     fetchEvents();
-    console.log(event);
  },[])
 
 const fetchEvents = async () => {
