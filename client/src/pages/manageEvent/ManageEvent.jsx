@@ -4,6 +4,7 @@ import { Card, Modal,Spinner } from 'react-bootstrap';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EventContext } from '../../context/EventContext';
+import UpdateEventModal from '../../components/updateEventModal/UpdateEventModal';
 import moment from 'moment';
 
 
@@ -34,6 +35,13 @@ const fetchEvents = async () => {
     }
 }
   
+const handleUpdateEvent = (eventItem) => {
+    setSelectedEvent(eventItem);
+}
+
+const handleCloseModal = ()=> {
+    setSelectedEvent(null);
+}
 
     if (!event || event.length === 0) {
         return (

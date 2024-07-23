@@ -42,10 +42,21 @@ export const EventProvider = ({children})=> {
         
        }
   }
+
+  const updateEvents = async (eventId,updateData) => {
+       try {
+         const response = await makeRequest.put(`${apiUrl}/event/${eventId}`, updateData);
+         setMessage({content:response.data.message,status:response.data.status})
+         return response.data.event;
+       } catch (error) {
+         const errorMessage = error.response?.data?.message;
+         setMessage({ content: errorMessage, status: 'fail' });
+       }
+  }
   
   
     
-    const values = {createEvent,getUserEvent,event}
+    const values = {createEvent,getUserEvent,event,updateEvents}
     return (
       <EventContext.Provider value={values}>
           {children}
