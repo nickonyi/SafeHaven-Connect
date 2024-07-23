@@ -9,6 +9,7 @@ import { useContext } from 'react';
 const UpdateEventModal = ({ eventDetails, handleClose, fetchEvents }) => {
     const {updateEvents} = useContext(EventContext);
     const [updatedEvent, setUpdatedEvent] = useState(eventDetails);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setUpdatedEvent(eventDetails);
@@ -24,8 +25,19 @@ const UpdateEventModal = ({ eventDetails, handleClose, fetchEvents }) => {
          e.stopPropagation();
     }
 
-    const handleSubmit  = ()=> {
-        
+    const handleSubmit  = async ()=> {
+        console.log(updatedEvent);
+        try {
+            const updated = await updateEvents(updatedEvent._id,updatedEvent);
+            if(updated){
+                handleClose();
+                navigate('/Events/vertical/createTicket');
+            }  else {
+                console.error('Failed to update event');
+            }
+        } catch (error) {
+            console.error('Error updating event:', error);
+        }
     }
     return (
         <Modal show={true} onHide={handleClose}>
