@@ -1,23 +1,65 @@
 import './CreateTicket.scss'
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu'
+import { EventContext } from '../../context/EventContext';
 import { Card, Modal } from 'react-bootstrap';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import { AuthContext } from '../../context/AuthContext'
 
 function CreateTicket() {
 
-    const event = [];
-    const [showModal, setShowModal] = useState(false);
     const [ticketType, setTicketType] = useState('Regular');
     const [sit, setSit] = useState('');
+    const [price, setPrice] = useState(0);
     const [paymentOption, setPaymentOption] = useState('Free');
+    const [showModal, setShowModal] = useState(false);
+    const [selectedEventId, setSelectedEventId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const {getUserEvent, event,createTicket} = useContext(EventContext);
+    const {currentUser} = useContext(AuthContext);
 
+    const userId = currentUser.id;
 
+    useEffect(()=>{
+      handleGetUserEvent();
+    },[])
 
-    const handleSubmit= ()=> {
-
+    const handleGetUserEvent = async ()=> {
+       await getUserEvent();
     }
+    const handleSubmit= async (e)=> {
+       e.preventDefault();
+
+       const formData = {
+        eventId: selectedEventId,
+        userId: userId,
+        type: ticketType,
+        price:0,
+        sit:sit
+      };
+
+      setIsLoading(true);
+      await createTicket(formData);
+      setIsLoading(false);
+
+      setTicketType('Regular');
+      setPaymentOption('Free');
+      setPrice(0);
+      setSit('');
+
+      setShowModal(false);
+    }
+
+    const handleAddTicketClick = (eventId)=> {
+      setSelectedEventId(eventId);
+      setShowModal(true);
+    }
+
+    const handleClose = ()=> {
+      setShowModal(false);
+  }
 
     if (!event || event.length === 0) {
         return (
@@ -61,8 +103,9 @@ function CreateTicket() {
         ))}
       </div>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Add Ticket</Modal.Title>
+          <CloseIcon className='btn-close' onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
@@ -89,17 +132,6 @@ function CreateTicket() {
                   onChange={() => setPaymentOption('Free')}
                 />
                 <label htmlFor="free" className="form-check-label">Free</label>
-              </div>
-              <div className="form-check">
-                <input
-                  type="radio"
-                  id="paid"
-                  className="form-check-input"
-                  value="Paid"
-                  checked={paymentOption === 'Paid'}
-                  onChange={() => setPaymentOption('Paid')}
-                />
-                <label htmlFor="paid" className="form-check-label">Paid</label>
               </div>
             </div>
             {paymentOption === 'Paid' && (

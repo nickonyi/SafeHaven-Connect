@@ -1,4 +1,5 @@
 import Event from "./../models/Event.js";
+import Ticket from "../models/Ticket.js";
 import jwt from "jsonwebtoken"
 import { multerUploads, dataUri,uploader, cloudinaryConfig } from '../middlewares/cloudinary.js';
 
@@ -142,4 +143,62 @@ export const deleteEvents = async (req,res,next)=> {
       console.error('Error deleting event:', error); 
       next(error);
      }
+}
+
+export const createTicket = async (req,res,next) => {
+  try {
+    const { eventId, userId, type, sit, price } = req.body;
+    
+    if (!['Regular', 'VIP'].includes(type)) {
+      return res.status(400).json({
+          status: "fail",
+          message: "Invalid ticket type."
+      });
+  }
+
+  const newTicket = new Ticket({
+    eventId,
+    userId,
+    type,
+    sit,
+    price
+});
+
+await newTicket.save();
+
+res.status(200).json({
+            status: "success",
+            message: `${type} ticket created successfully`,
+            ticket: newTicket
+});
+    
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const getTicketforEvent = async (req,res,next)=> {
+  try {
+    const eventId = req.params.ticketId;
+    console.log(eventId);
+
+    const tickets = await Ticket.find({eventId});
+    
+    if (!tickets) {
+      const error = new Error("CastError")
+      error.statuscode = 204
+      return next(error)
+  }
+
+  res.status(200).json({
+      status: "success",
+      message: "Tickets for the event fetched successfully",
+      resulit: tickets.length,
+      tickets
+  });
+    
+  } catch (error) {
+    console.log("Error in getting tickets",error);
+    next(error)
+  }
 }

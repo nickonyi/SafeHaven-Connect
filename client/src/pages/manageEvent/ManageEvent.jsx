@@ -13,7 +13,7 @@ function ManageEvent() {
  const [loading,setLoading] = useState(true);
  const [selectedEvent, setSelectedEvent] = useState(null);
  const [selectedTicket, setSelectedTicket] = useState(null);
- const {getUserEvent,event,deleteEvent} = useContext(EventContext);
+ const {getUserEvent,event,deleteEvent,eventTicket,Ticket} = useContext(EventContext);
 
  
  useEffect(()=>{
@@ -34,14 +34,40 @@ const fetchEvents = async () => {
         setLoading(false);  
     }
 }
+
+const fetchTicketsForEvent = async (eventId) => {
+    try {
+        await eventTicket(eventId);
+    } catch (error) {
+        console.error('Error fetching tickets for event:', error);
+    }
+};
   
 const handleUpdateEvent = (eventItem) => {
     setSelectedEvent(eventItem);
 }
 
+const handleToggleTicketVisibility = async (eventId)=> {
+    const eventIndex = events.findIndex(eventItem => eventItem._id == eventId);
+    if(eventIndex !== -1 && !events[eventIndex].showTickets){
+        await fetchTicketsForEvent(eventId);
+    }
+
+    const updatedEvents = events.map((eventItem)=> {
+        if(eventItem._id === eventId){
+            return {...eventItem,showTickets:!eventItem.showTickets}
+        }
+        return eventItem;
+    })
+
+    setEvents(updatedEvents);
+}
+
 const handleCloseModal = ()=> {
     setSelectedEvent(null);
 }
+
+
 
 const handleDeleteEvent = async (eventId) => {
     try {

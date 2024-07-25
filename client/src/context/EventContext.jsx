@@ -9,6 +9,7 @@ export const EventContext = createContext();
 export const EventProvider = ({children})=> {
   const [message, setMessage] = useState({ content: "", status: "" });
   const [event, setEvent] = useState();
+  const [Ticket, setTicket] = useState();
   const apiUrl = import.meta.env.VITE_apiUrl;
 
   const createEvent = async({formData})=> {
@@ -63,9 +64,30 @@ export const EventProvider = ({children})=> {
             setMessage({ content: errorMessage, status: 'fail' });
        }
   }
-  
+
+  const createTicket = async (formData)=> {
+      try {
+        const response = await makeRequest.post(`${apiUrl}/event/createTicket`,formData);
+        setMessage({content:response.data.message,status:response.data.status});
+      } catch (error) {
+            const errorMessage = error.response?.data?.message;
+            setMessage({ content: errorMessage, status: 'fail' });
+      }
+  }
+
+
+  const eventTicket = async (eventId)=> {
+    try {
+      const response = await makeRequest.get(`${apiUrl}/event/getTicket/${eventId}`);
+      setTicket(response.data.tickets);
+      return response.data.tickets;
+  } catch (error) {
+      const errorMessage = error.response?.data?.message;
+      setMessage({ content: errorMessage, status: 'fail' });
+  }
+  }
     
-    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent}
+    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket}
     return (
       <EventContext.Provider value={values}>
           {children}

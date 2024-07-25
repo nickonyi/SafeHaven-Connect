@@ -194,6 +194,12 @@
     gap: 1rem;
 }
 
+.d-flex {
+    display: flex;
+    gap:10px;
+    justify-content: center;
+}
+
 .spinner-overlay {
     position: fixed;
     top: 0;
