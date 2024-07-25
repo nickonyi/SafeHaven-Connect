@@ -105,3 +105,41 @@ export const updateEvents = async (req,res,next)=> {
         next(error);
     }
 }
+
+export const deleteEvents = async (req,res,next)=> {
+     try {
+      const token = req.cookies.accessToken;
+
+      if(!token) return res.status(401).json('Not logged in!');
+      jwt.verify(token,"secretkey",async (err,userInfo)=> {
+        const userId = userInfo.id;
+        const eventId = req.params.eventId;
+
+        const event = await Event.findById(eventId);
+
+        if (event.createdBy !== userId.toString()) {
+          return res.status(403).json({
+              status: "Error",
+              message: "You're not authorized to delete this Event."
+          });
+      }
+
+      const deletedEvent = await Event.findByIdAndDelete(eventId);
+
+      if(!deletedEvent){
+            const error = new Error("CastError");
+            error.statuscode = 204
+            return next(error)
+          }
+
+          res.status(200).json ({
+            status:"success",
+            message: "Event successfully deleted",
+          })
+      
+      });
+     } catch (error) {
+      console.error('Error deleting event:', error); 
+      next(error);
+     }
+}
