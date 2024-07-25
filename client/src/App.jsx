@@ -1,6 +1,5 @@
 import LeftBar from "./components/leftBar/LeftBar";
 import NavBar from "./components/navBar/NavBar";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import RightBar from "./components/rightBar/RightBar";
 import EventNavBar from "./components/eventNavBar/EventNavBar";
 import Login from "./pages/Login/Login"

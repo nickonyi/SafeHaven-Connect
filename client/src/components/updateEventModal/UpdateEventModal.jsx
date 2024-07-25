@@ -5,6 +5,7 @@ import { EventContext } from '../../context/EventContext';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 import { useContext } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 
 const UpdateEventModal = ({ eventDetails, handleClose, fetchEvents }) => {
     const {updateEvents} = useContext(EventContext);
@@ -41,8 +42,9 @@ const UpdateEventModal = ({ eventDetails, handleClose, fetchEvents }) => {
     }
     return (
         <Modal show={true} onHide={handleClose}>
-            <Modal.Header closeButton>
+            <Modal.Header >
                 <Modal.Title>Update Event</Modal.Title>
+                <CloseIcon className='btn-close' onClick={handleClose} />
             </Modal.Header>
             <Modal.Body>
                 <Form>
