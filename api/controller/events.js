@@ -202,3 +202,45 @@ export const getTicketforEvent = async (req,res,next)=> {
     next(error)
   }
 }
+
+export const updateTicket = async (req,res,next)=> {
+  try {
+    const token = req.cookies.accessToken;
+
+      if(!token) return res.status(401).json('Not logged in!');
+      jwt.verify(token,"secretkey",async (err,userInfo)=> {
+        const userId = userInfo.id;
+        const ticketId = req.params.ticketId;
+        const { sit, price } = req.body;
+
+        const ticket = await Ticket.findById(ticketId);
+
+        if (ticket.userId !== userId.toString()) {
+            return res.status(403).json({
+                status: "Error",
+                message: "You're not authorized to update this ticket.",
+            });
+        }
+
+        if (!ticket) {
+          const error = new Error("CastError")
+          error.statuscode = 204
+          return next(error)
+       }   
+
+       ticket.sit = sit;
+       ticket.price = price;
+
+       const updatedTicket = await ticket.save();
+
+  res.status(200).json({
+            status: 'success',
+            message: "Ticket updated successfully",
+            ticket: updatedTicket
+  })
+});
+  } catch (error) {
+    console.error('Error updating ticket:', error);
+    next(error);
+  }
+}

@@ -86,8 +86,19 @@ export const EventProvider = ({children})=> {
       setMessage({ content: errorMessage, status: 'fail' });
   }
   }
-    
-    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket}
+  
+  const updateTicket = async (ticketId,updateData) => {
+    try {
+      const response = await makeRequest.put(`${apiUrl}/event/updateTicket/${ticketId}`, updateData);
+      setMessage({content:response.data.message,status:response.data.status})
+      return response.data.ticket;
+    } catch (error) {
+      const errorMessage = error.response?.data?.message;
+      setMessage({ content: errorMessage, status: 'fail' });
+    }
+  }
+
+    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket}
     return (
       <EventContext.Provider value={values}>
           {children}

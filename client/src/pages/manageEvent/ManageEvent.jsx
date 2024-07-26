@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EventContext } from '../../context/EventContext';
 import UpdateEventModal from '../../components/updateEventModal/UpdateEventModal';
+import TicketUpdateModal from '../../components/ticketUpdateModal/TicketUpdateModal';
 import moment from 'moment';
 
 
@@ -67,8 +68,13 @@ const handleCloseModal = ()=> {
     setSelectedEvent(null);
 }
 
+const handleOpenTicketUpdateModal = (ticket) => {
+    setSelectedTicket(ticket);
+}
 
-
+const handleCloseTicketUpdateModal = () => {
+    setSelectedTicket(null);
+};
 const handleDeleteEvent = async (eventId) => {
     try {
         await deleteEvent(eventId);
