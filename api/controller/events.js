@@ -244,3 +244,42 @@ export const updateTicket = async (req,res,next)=> {
     next(error);
   }
 }
+
+
+export const deleteTicket = async (req,res,next)=> {
+  try {
+    const token = req.cookies.accessToken;
+
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",async (err,userInfo)=> {
+      const userId = userInfo.id;
+      const ticketId = req.params.ticketId;
+
+      const ticket = await Ticket.findById(ticketId);
+
+      if (ticket.userId !== userId.toString()) {
+          return res.status(403).json({
+              status: "Error",
+              message: "You're not authorized to delete this ticket."
+          });
+      }
+
+      const deletedTicket = await Ticket.findByIdAndDelete(ticketId);
+
+      if(!deletedTicket){
+            const error = new Error("CastError");
+            error.statuscode = 204
+            return next(error)
+          }
+
+          res.status(200).json ({
+            status:"success",
+            message: "Ticket successfully deleted",
+          })
+      
+      });
+  } catch (error) {
+    console.error('Error deleting ticket:', error);
+    next(error);
+  }
+} 

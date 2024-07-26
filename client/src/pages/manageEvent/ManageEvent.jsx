@@ -14,7 +14,7 @@ function ManageEvent() {
  const [loading,setLoading] = useState(true);
  const [selectedEvent, setSelectedEvent] = useState(null);
  const [selectedTicket, setSelectedTicket] = useState(null);
- const {getUserEvent,event,deleteEvent,eventTicket,Ticket} = useContext(EventContext);
+ const {getUserEvent,event,deleteEvent,eventTicket,Ticket,deleteTicket} = useContext(EventContext);
 
  
  useEffect(()=>{
@@ -83,6 +83,15 @@ const handleDeleteEvent = async (eventId) => {
         console.error('Error deleting event:', error);
     }
 } 
+
+const handleDeleteTicket = async (ticket) =>{
+    try {
+        await deleteTicket(ticket._id);
+        fetchTicketsForEvent(ticket.eventId); 
+    } catch (error) {
+        console.error('Error deleting ticket:', error);
+    }
+}
     if (!event || event.length === 0) {
         return (
             <div className='manage-event'>

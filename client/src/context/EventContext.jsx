@@ -98,7 +98,17 @@ export const EventProvider = ({children})=> {
     }
   }
 
-    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket}
+  const deleteTicket = async (ticketId)=> {
+    try {
+      const response = await makeRequest.delete(`${apiUrl}/event/deleteTicket/${ticketId}`);
+      setMessage({content:response.data.message,status:response.data.status})
+    } catch (error) {
+        const errorMessage = error.response?.data?.message;
+        setMessage({ content: errorMessage, status: 'fail' });
+  }
+}
+
+    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket,deleteTicket}
     return (
       <EventContext.Provider value={values}>
           {children}
