@@ -1,6 +1,8 @@
 import { db } from "./connect.js";
 import jwt from "jsonwebtoken";
 import Event from "../models/Event.js";
+import Ticket from "../models/Ticket.js";
+import Registration from "../models/Registration.js";
 
 export const getUser = (req, res) => {
  const userId = req.params.userId;
@@ -53,6 +55,7 @@ export const getUserEvents = async (req,res,next)=> {
 
   try {
     const token = req.cookies.accessToken;
+    console.log(token);
    
     if(!token) return res.status(401).json('Not logged in!');
     jwt.verify(token,"secretkey",async (err,userInfo)=> {
@@ -72,6 +75,56 @@ export const getUserEvents = async (req,res,next)=> {
     console.error('Error fetching user events:', error);
         next(error);
   }
+}
 
+export const registerforEvent = async (req,res)=> {
+    const { userId, ticketId, eventId, email, numberOfSeats, ticketType } = req.body;
+    
+    const ticket = await Ticket.findById(ticketId);
+        if (!ticket) {
+            return res.status(404).json({
+                message: 'Ticket not found'
+            });
+        }
+
+        if (ticket.sit < numberOfSeats) {
+            return res.status(400).json({
+                message: 'Insufficient available seats'
+            });
+        }
+
+        let totalPrice = 0;
+        let status = 'pending';
+
+        if(ticket.price === 0){
+            status = 'completed';
+            ticket.sit -= numberOfSeats;
+            await ticket.save();
+        }
+
+        const registration = new Registration({
+            ticketId,
+            userId,
+            email,
+            numberOfSeats,
+            ticketType,
+            totalPrice,
+            status,
+            eventId,
+        });
+        await registration.save();
+
+     
+
+        return res.status(200).json({
+            message: 'Registration successful',
+            registration,
+        });
+
+}
+
+export const getMyRegisterEvent = async (req,res,next)=> {
+  const token = req.cookies.accessToken;
+  console.log(token)
 
 }

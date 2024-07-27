@@ -7,6 +7,8 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [currentUser,setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
+    const apiUrl = import.meta.env.VITE_apiUrl;
+    const [message, setMessage] = useState({ content: '', status: '' });
 
     
     const login = async (inputs) => {
@@ -21,8 +23,31 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('user',JSON.stringify(currentUser));
     }, [currentUser]);
 
+    const registerForevent = async (formData)=> {
+         try {
+            const response = await axios.post(`${apiUrl}/users/registerforevent`, formData);
+            return response.data;
+         } catch (error) {
+            const errorMessage = error.response?.data?.message;
+            setMessage({ content: errorMessage, status: 'fail' });
+         }
+    }
+
+    const getMyregisteredEvents = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/users/myregister-event`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+        });
+            return response.data;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message;
+            setMessage({ content: errorMessage, status: 'fail' });
+        }
+    }
     return (
-        <AuthContext.Provider value={{currentUser,login}}>
+        <AuthContext.Provider value={{currentUser,login,registerForevent,getMyregisteredEvents}}>
            {children}
         </AuthContext.Provider>
     )

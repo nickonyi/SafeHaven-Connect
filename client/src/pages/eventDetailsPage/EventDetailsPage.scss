@@ -205,24 +205,65 @@
 
 .register{
     padding: 6px 12px;
-    background-color: #f53f7b;
+    background-color: #2b2baa;
     color: white;
     border: none;
+    height: 30px;
     border-radius: 4px;
     font-size: 10px;
     cursor: pointer;
-    font-weight: 600;
-    font-family: "Poppins", sans-serif;
     margin-top: 10px;
 }
 
 .register:hover{
-    background-color: #f53f7b;
+    background-color: #2b2baa;;
 }
 
 .registermodal{
     margin-top: 120px;
 }
+
+.modal-header {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    padding: var(--bs-modal-header-padding);
+    border-bottom: var(--bs-modal-header-border-width) solid var(--bs-modal-header-border-color);
+    border-top-left-radius: var(--bs-modal-inner-border-radius);
+    border-top-right-radius: var(--bs-modal-inner-border-radius);
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: var(--bs-modal-padding);
+}
+
+.form-label {
+    margin-bottom: .5rem;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: rgb(77, 77, 77);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+   
+}
+
+
 
 @media (max-width: 1000px) {
     .detailsevent{
@@ -269,3 +310,4 @@
         background: rgb(255,255,255);
     }
 }
+

@@ -1,13 +1,30 @@
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu'
 import './JoinEvent.scss'
 import { Card, Modal } from 'react-bootstrap';
-import { useState } from 'react';
+import { useContext, useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 
 function JoinEvent() {
     const [showTitle, setShowTitle] = useState(false);
     const [events, setEvents] = useState([]);
+    const { getMyregisteredEvents } = useContext(AuthContext);
+
+    useEffect(() => {
+      fetchMyRegisteredEvents();
+    }, []);
+  
+    const fetchMyRegisteredEvents = async () => {
+      try {
+        const response = await getMyregisteredEvents();
+        console.log(response);
+        setEvents(response.events);
+        setShowTitle(response.events.length > 0);
+      } catch (error) {
+        console.error('Error fetching registered events:', error);
+      }
+    };
 
 
   return (

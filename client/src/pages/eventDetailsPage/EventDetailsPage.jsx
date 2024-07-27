@@ -5,20 +5,30 @@ import { EventContext } from '../../context/EventContext';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { Modal, Button, Form } from 'react-bootstrap';
+import CloseIcon from '@mui/icons-material/Close';
+import { AuthContext } from '../../context/AuthContext';
 
 
 function EventDetailsPage() {
-   const [eventDetails, setEventDetails] = useState(null);
-   const {getSingle,eventTicket,Ticket} = useContext(EventContext);
-   const {eventId} = useParams();
+    const [eventDetails, setEventDetails] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [selectedTicketId, setSelectedTicketId] = useState(null);
+    const [selectedTicketType, setSelectedTicketType] = useState(null);
+    const [email, setEmail] = useState('');
+    const [numberOfSeats, setNumberOfSeats] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const {getSingle,eventTicket,Ticket} = useContext(EventContext);
+    const {eventId} = useParams();
+    const {currentUser} = useContext(AuthContext);
+    const {registerForevent} = useContext(AuthContext);
 
    useEffect(() => {
     handleGetSingleEvent();
+    fetchTicketsForEvent(eventId);
    }, [eventId]);
 
-   useEffect(() => {
-    console.log(eventDetails);
-  }, [eventDetails]);
+ 
 
    const handleGetSingleEvent = async () => {
     try {
@@ -30,12 +40,53 @@ function EventDetailsPage() {
     }
    }
 
+   const fetchTicketsForEvent = async (eventId) => {
+    try {
+      const ticketsData = await eventTicket(eventId);
+    } catch (error) {
+      console.error('Error fetching tickets for event:', error);
+    }
+  };
+
    const formatDate = (dateString) => {
     const options = { month: 'short', day: '2-digit', year: 'numeric' };
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', options);
    }
 
+   const handleRegisterForEvent = async (ticketId, ticketType) => {
+            setShowModal(true);
+            setSelectedTicketId(ticketId);
+            setSelectedTicketType(ticketType);
+   }
+
+
+   const handleSubmit = async (e) => {
+       e.preventDefault();
+       setLoading(true);
+
+         const formData = {
+            email,
+            numberOfSeats,
+            ticketId: selectedTicketId,
+            eventId,
+            userId: currentUser.id,
+            ticketType: selectedTicketType
+         }
+
+
+         const regisrationResponse = await registerForevent(formData);
+         console.log(regisrationResponse);
+         setLoading(false);
+
+         window.location.href = '/Events/vertical/joinevent';
+
+   }
+   const handleClose = () => {
+    setShowModal(false);
+   }
+
+  
 
 
   return (
@@ -113,6 +164,29 @@ function EventDetailsPage() {
                 </div>
               )
         }
+
+<Modal show={showModal} className='registermodal' onHide={() => setShowModal(false)}>
+        <Modal.Header>
+          <Modal.Title>Register for Event</Modal.Title>
+          <CloseIcon className='btn-close' onClick={handleClose} />
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="email">
+              <Form.Label
+              >Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            </Form.Group>
+            <Form.Group controlId="numberOfSeats">
+              <Form.Label>Number of Seats</Form.Label>
+              <Form.Control type="number" min="1" value={numberOfSeats} onChange={(e) => setNumberOfSeats(e.target.value)} required />
+            </Form.Group>
+            <Button className='register' type="submit" disabled={loading}>
+              {loading ? 'Registering...' : 'Register'}
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </div>
   )
 }
