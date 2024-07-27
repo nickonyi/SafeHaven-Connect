@@ -4,6 +4,12 @@
     box-sizing: border-box;
 }
 
+.event-detales{
+    background-color:#ccc;
+    height: 100%;
+    padding-bottom: 30px;
+}
+
 .detailsevent{
     width: 85%;
     margin: auto;
@@ -11,6 +17,7 @@
     margin-bottom: 50px;
     display: flex;
     justify-content: space-between;
+    
 }
 
 .eventdatailpimg{
@@ -22,6 +29,8 @@
 .eventdatailpimg img{
     width: 100%;
     padding-bottom: 25px;
+    height: 500px;
+    object-fit: cover;
 }
 
 .eventdatailpimg p{
@@ -35,9 +44,11 @@
 
 .locationandmap{
     margin-top: 170px;
-    width: 30%;
+    width: 25%;
+    height: 300px;
     padding: 25px;
     background: rgb(255,255,255);
+    box-shadow: 5px 5px 10px #888888, -5px -5px 10px #cccccc
 }
 
 .locationandmaptilte{
@@ -109,7 +120,6 @@
     width: 85%;
     margin: auto;
     margin-top: 10px;
-    margin-bottom: 10px;
     padding: 25px;
     background: rgb(255,255,255);
 }
@@ -163,6 +173,7 @@
     color: #000000;
     line-height: 8px;
     font-family: "Poppins", sans-serif;
+    padding-bottom: 10px;
 }
 
 .ticketbodyp{
