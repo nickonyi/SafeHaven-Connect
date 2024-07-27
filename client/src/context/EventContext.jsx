@@ -118,7 +118,17 @@ const getAllTheEvents = async ()=> {
   }
 }
 
-    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket,deleteTicket,getAllTheEvents}
+const getSingle = async (eventId) => {
+  try {
+    const response = await makeRequest.get(`${apiUrl}/event/${eventId}`);
+    return response.data.event;
+  } catch (error) {
+        const errorMessage = error.response?.data?.message;
+        setMessage({ content: errorMessage, status: 'fail' });
+  }
+}
+
+    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket,deleteTicket,getAllTheEvents,getSingle}
     return (
       <EventContext.Provider value={values}>
           {children}

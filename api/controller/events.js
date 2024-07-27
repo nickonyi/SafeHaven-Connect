@@ -299,3 +299,24 @@ export const getallEvents = async (req,res,next)=> {
      next(error);
    }
 }
+
+export const getsigleEvents = async (req,res,next)=> {
+  const eventId = req.params.eventId;
+  try {
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      const error = new Error("CastError")
+      error.statuscode = 204
+      return next(error)
+  }
+
+  res.status(200).json({
+      status: 'success',
+      event
+  });
+    
+  } catch (error) {
+    next(error);
+  } 
+}
