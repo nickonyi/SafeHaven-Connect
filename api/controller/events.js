@@ -283,3 +283,19 @@ export const deleteTicket = async (req,res,next)=> {
     next(error);
   }
 } 
+
+
+export const getallEvents = async (req,res,next)=> {
+   try {
+     const events = await Event.find();
+
+     res.status(200).json({
+        status: "success",
+        message: "All events fetched successfully",
+        result: events.length,
+        events
+     })
+   } catch (error) {
+     next(error);
+   }
+}

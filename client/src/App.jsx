@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home"
 import Profile from "./pages/Profile/Profile";
 import Messenger from "./pages/messenger/Messenger";
 import LandingPage from "./routes/landingPage/LandingPage";
+import EventDetailsPage from "./pages/eventDetailsPage/EventDetailsPage";
 import './app.scss'
 import {
   createBrowserRouter,
@@ -150,7 +151,11 @@ function App() {
       },
       {
         path: '/Events/horizontal/event',
-        element:<EventsPage /> 
+        element:<EventsPage />, 
+      },
+      {
+        path: '/Events/horizontal/event/:eventId',
+        element:<EventDetailsPage /> 
       },
       {
         path: '/Events/vertical/postEvent',

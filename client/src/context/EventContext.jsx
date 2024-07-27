@@ -108,7 +108,17 @@ export const EventProvider = ({children})=> {
   }
 }
 
-    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket,deleteTicket}
+const getAllTheEvents = async ()=> {
+  try {
+    const response = await makeRequest.get(`${apiUrl}/event/getAllEvents`);
+    return response.data.events;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message;
+    setMessage({ content: errorMessage, status: 'fail' });
+  }
+}
+
+    const values = {createEvent,getUserEvent,event,updateEvents,deleteEvent,createTicket,eventTicket,Ticket,updateTicket,deleteTicket,getAllTheEvents}
     return (
       <EventContext.Provider value={values}>
           {children}
