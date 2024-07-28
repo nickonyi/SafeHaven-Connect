@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { createContext,useState } from 'react';
 import axios from 'axios';
+import { makeRequest } from '../axios';
 
 
 export const AuthContext = createContext();
@@ -35,11 +36,8 @@ export const AuthContextProvider = ({ children }) => {
 
     const getMyregisteredEvents = async () => {
         try {
-            const response = await axios.get(`${apiUrl}/users/myregister-event`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-        });
+            const response = await makeRequest.get(`${apiUrl}/users/myregister-event`);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message;

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import Event from "../models/Event.js";
 import Ticket from "../models/Ticket.js";
 import Registration from "../models/Registration.js";
+import moment from "moment";
 
 export const getUser = (req, res) => {
  const userId = req.params.userId;
@@ -55,7 +56,7 @@ export const getUserEvents = async (req,res,next)=> {
 
   try {
     const token = req.cookies.accessToken;
-    console.log(token);
+    
    
     if(!token) return res.status(401).json('Not logged in!');
     jwt.verify(token,"secretkey",async (err,userInfo)=> {
@@ -124,7 +125,53 @@ export const registerforEvent = async (req,res)=> {
 }
 
 export const getMyRegisterEvent = async (req,res,next)=> {
-  const token = req.cookies.accessToken;
-  console.log(token)
+  try {
+    const token = req.cookies.accessToken;
+
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",async (err,userInfo)=> {
+        if(err) return res.status(403).json('Invalid token!');
+
+        const userId = userInfo.id.toString();
+        
+
+        const registrations = await Registration.find({ userId }).populate('eventId');
+        
+        if (!registrations || registrations.length === 0) {
+            return res.status(200).json({
+                message: 'No events registered by the user',
+                events: []
+            });
+        }
+
+        const events = registrations.map((registration) => {
+            const eventDate = moment(registration.eventId.date);
+            const today = moment();
+            const daysUntilEvent = eventDate.diff(today,'days');
+
+            return {
+                eventName: registration.eventId.name,
+                eventDate: eventDate.format('YYYY-MM-DD'),
+                eventLocation: registration.eventId.location,
+                eventVenue: registration.eventId.venue,
+                eventCategory: registration.eventId.category,
+                daysUntilEvent,
+                registrationStatus: registration.status,
+                numberOfSeats: registration.numberOfSeats,
+                ticketPrice: registration.totalPrice,
+                ticketType: registration.ticketType
+            }
+        });
+
+        return res.status(200).json({
+            message: 'User events fetched successfully',
+            events
+        })
+    });
+    
+    
+  } catch (error) {
+    next(error);
+  }
 
 }

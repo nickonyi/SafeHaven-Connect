@@ -1,7 +1,7 @@
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu'
 import './JoinEvent.scss'
-import { Card, Modal } from 'react-bootstrap';
 import { useContext, useState,useEffect } from 'react';
+import { Table, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
