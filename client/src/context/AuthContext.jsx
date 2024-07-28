@@ -44,8 +44,21 @@ export const AuthContextProvider = ({ children }) => {
             setMessage({ content: errorMessage, status: 'fail' });
         }
     }
+
+    const getUsersRegisteredForMyEvent = async (eventId) => {
+        console.log(eventId);
+        try {
+            const response = await makeRequest.get(`${apiUrl}/users/users-registered-for-my-event/${eventId}`);
+            console.log(response.data);
+            return response.data.userRegistrations;
+        } catch (error) {
+            const errorMessage = error.response?.data?.message;
+            setMessage({ content: errorMessage, status: 'fail' });   
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{currentUser,login,registerForevent,getMyregisteredEvents}}>
+        <AuthContext.Provider value={{currentUser,login,registerForevent,getMyregisteredEvents,getUsersRegisteredForMyEvent}}>
            {children}
         </AuthContext.Provider>
     )

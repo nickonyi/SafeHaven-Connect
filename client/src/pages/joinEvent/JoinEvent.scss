@@ -3,9 +3,14 @@
     
 }
 
+.nav {
+  flex: 1;
+}
+
 .shadow-lg {
     padding-block: 20px;
     padding-inline: 10px;
+    flex: 4;
 }
 .tb {
     width: 100%;

@@ -175,3 +175,79 @@ export const getMyRegisterEvent = async (req,res,next)=> {
   }
 
 }
+
+export const  userregisterforMyEvent = async (req,res,next)=> {
+    try {
+        const token = req.cookies.accessToken;
+         
+
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",async (err,userInfo)=> {
+        if(err) return res.status(403).json('Invalid token!');
+
+        const userId = userInfo.id;
+        const eventId = req.params.eventId;
+
+        
+
+        const event = await Event.findById(eventId);
+        
+        if (!event) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Event not found'
+            });
+        }
+        
+        if (event.createdBy !== userId.toString()) {
+            return res.status(403).json({
+                status: 'fail',
+                message: 'You are not authorized to view registrations for this event'
+            });
+        }
+        
+        const queryPromise = (sql, params) => {
+            return new Promise((resolve, reject) => {
+                db.query(sql, params, (err, data) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    resolve(data);
+                });
+            });
+       };
+
+       const registrations = await Registration.find({ eventId, userId: { $ne: userId } }).populate('ticketId');
+        console.log(registrations);
+
+        const userRegistrations = [];
+         
+        for (const registration of registrations) {
+            const ticket = registration.ticketId;
+            const sql = `SELECT * FROM users WHERE id = ?`;
+
+            try {
+                const data = await queryPromise(sql, [registration.userId]);
+                const { password, confirmPassword, ...info } = data[0];
+                userRegistrations.push({
+                    username: info.username,
+                    ticketType: registration.ticketType,
+                    status: registration.status,
+                    numberOfSeats: registration.numberOfSeats,
+                    pricePaid: registration.totalPrice,
+                    ticketPrice: ticket.price,
+                });
+            } catch (err) {
+                console.error('Error querying the database:', err);
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+        }
+
+        console.log(userRegistrations);
+        res.status(200).json({ userRegistrations });
+
+    });
+    } catch (error) {
+        next(error);
+    }
+}

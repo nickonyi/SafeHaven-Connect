@@ -1,14 +1,49 @@
 import NavigationMenu from '../../components/navigationMenu/NavigationMenu'
 import './ManageRegistration.scss'
-import { Card, Modal } from 'react-bootstrap';
-import { useState } from 'react';
+import { Card, Modal,Table } from 'react-bootstrap';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {EventContext }from '../../context/EventContext';
+import moment from 'moment';
+import { AuthContext } from '../../context/AuthContext';
+
 
 function ManageRegistration() {
-    const events = [];
+    const [events, setEvents] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [registrations, setRegistrations] = useState([]);
+    const {getUserEvent} = useContext(EventContext);
+    const {getUsersRegisteredForMyEvent} = useContext(AuthContext);
+
+    useEffect(() => {
+      fetchEvents();
+    }, []);
+
+
+    const fetchEvents = async () => {
+      try {
+        const response = await getUserEvent();
+        setEvents(response.events);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    useEffect(() => {
+      console.log(selectedEvent);
+    }, []);
+
+    const handleManageRegistrationsClick = async (eventId) => {
+        setSelectedEvent(eventId);
+        setIsLoading(true);
+        try {
+          const response = await getUsersRegisteredForMyEvent(eventId);
+          setRegistrations(response);
+        } catch (error) {
+           console.log(error);
+        }
+        setIsLoading(false);
+    }
 
   return (
     <div className='manage-registration'>
@@ -51,8 +86,8 @@ function ManageRegistration() {
         <Modal.Body>
           {isLoading ? (
            <div className='d-flex justify-content-center align-items-center'>
-             <div class="spinner-border text-danger" role="status">
-            <span class="sr-only">Loading...</span>
+             <div className="spinner-border text-danger" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
            </div>
           ) : (
@@ -73,7 +108,7 @@ function ManageRegistration() {
                     <tbody>
                       {registrations.map((registration, index) => (
                         <tr key={index}>
-                          <td>{registration.userName}</td>
+                          <td>{registration.username}</td>
                           <td>{registration.ticketType}</td>
                           <td>{registration.status}</td>
                           <td>{registration.ticketPrice === 0 ? 'Free' : registration.ticketPrice}</td>
