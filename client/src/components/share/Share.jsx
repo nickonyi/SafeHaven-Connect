@@ -15,13 +15,15 @@ const {currentUser}= useContext(AuthContext);
 const userId = currentUser.id;
 
 const {isLoading, error, data}= useQuery({
-  queryKey: ['user'],
+  queryKey: ['user',userId],
   queryFn: () =>
     makeRequest.get('/users/find/' + userId).then((res) => {
       return res.data
     })
 }
 )
+
+
   
   const [file,setFile] = useState(null);
   const [desc,setDesc] = useState('');

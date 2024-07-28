@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import {EventContext }from '../../context/EventContext';
 import moment from 'moment';
 import { AuthContext } from '../../context/AuthContext';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 function ManageRegistration() {
@@ -45,6 +46,10 @@ function ManageRegistration() {
         setIsLoading(false);
     }
 
+    const handleClose = () => {
+      setSelectedEvent(null);
+    }
+
   return (
     <div className='manage-registration'>
         <NavigationMenu />
@@ -79,9 +84,10 @@ function ManageRegistration() {
           </Card>
         )}
       </div>
-      <Modal show={selectedEvent !== null} onHide={() => setSelectedEvent(null)}>
-        <Modal.Header closeButton>
+      <Modal className='reg-Modal' show={selectedEvent !== null} onHide={() => setSelectedEvent(null)}>
+        <Modal.Header>
           <Modal.Title>User Registrated for This Event</Modal.Title>
+          <CloseIcon className='btn-close' onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
           {isLoading ? (

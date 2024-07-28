@@ -25,9 +25,6 @@ function NavigationMenu() {
         <Link className='a' to="/Events/vertical/manageregistration">
           <li><AppRegistrationIcon/>Manage Registration</li>
         </Link>
-        <Link className='a' to="/Events/vertical/transaction">
-          <li><AppRegistrationIcon/>Transaction</li>
-        </Link>
         <Link className='a' to="/Events/vertical/joinevent">
           <li><AspectRatioIcon/>Joined Event</li>
         </Link>

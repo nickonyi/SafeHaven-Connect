@@ -56,7 +56,7 @@ const {isLoading:rIsLoading,data:relationshipData}= useQuery({
         )
         }
 
-         <OnlineFollowingUsers userId={userId} currentUser={currentUser}/>
+         <OnlineFollowingUsers key={userId} userId={userId} currentUser={currentUser}/>
       
       </div>
     </div>
