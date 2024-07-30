@@ -74,3 +74,20 @@ export const deletePost =  (req, res) => {
         })
     })
 };
+
+export const addBlog = (req,res,next) => {
+    try {
+        const token = req.cookies.accessToken;
+    
+    if(!token) return res.status(401).json('Not logged in!');
+    jwt.verify(token,"secretkey",(err,userInfo)=> {
+        if(err) return res.status(403).json('Invalid token!');
+        
+        console.log(req.body);
+    });
+    } catch (error) {
+        console.log(error);
+        next(error);
+        
+    }
+}
