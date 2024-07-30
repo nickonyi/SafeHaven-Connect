@@ -31,7 +31,7 @@ function Login() {
       <div className="card">
         <div className="left">
           <h1>SafeHaven Connect</h1>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste earum, numquam, dignissimos, consectetur aspernatur aliquid debitis itaque quod consequatur at quia tenetur quis ipsam! Aut dolorem odio numquam hic magni!</p>
+          <p>Join our community and take the first step towards recovery with the support of your peers. Whether you're here to seek help, offer support, or educate yourself, we're here to provide a safe, anonymous, and supportive environment.</p>
            <span>Don't you have an account?</span>
            <Link to="/Register">
            <button>Register</button>
