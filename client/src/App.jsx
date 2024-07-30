@@ -24,6 +24,7 @@ import {
 import { useContext } from "react";
 import { DarkModeContext } from "./context/DarkModeContext";
 import { AuthContext } from "./context/AuthContext";
+import { UserContextProvider } from "./context/UserContext";
 import { EventProvider} from "./context/EventContext";
 import EventsPage from "./pages/eventsPage/EventsPage";
 import PostEvent from "./pages/postEvent/PostEvent";
@@ -32,6 +33,11 @@ import ManageEvent from "./pages/manageEvent/ManageEvent";
 import ManageRegistration from "./pages/manageRegistration/ManageRegistration";
 import TransactionsPage from "./pages/transactionsPage/TransactionsPage";
 import JoinEvent from "./pages/joinEvent/JoinEvent";
+import Resource from "./pages/resources/Resource";
+import CreatePage from "./components/createBlog/CreatePage";
+import CreateBlog from "./components/createBlog/CreatePage";
+
+
 
 
 function App() {
@@ -77,6 +83,20 @@ function App() {
       <QueryClientProvider client ={queryClient}>
       <div className={`theme-${darkMode?"dark":"light"}`}>
         <EventNavBar />
+        <div style={{flex:6}}>
+          <Outlet />
+        </div>
+        </div>
+        </QueryClientProvider>
+
+    )
+  }
+
+  const ResourcesLayout = ()=> {
+    return (
+      <QueryClientProvider client ={queryClient}>
+      <div className={`theme-${darkMode?"dark":"light"}`}>
+        <NavBar />
         <div style={{flex:6}}>
           <Outlet />
         </div>
@@ -133,6 +153,24 @@ function App() {
     {
       path: "/Register",
       element: <Register />
+    },
+    {
+      path: "/Resources",
+      element: (
+      <ProtectedLayout>
+        <UserContextProvider>
+        <ResourcesLayout/>
+        </UserContextProvider>
+      </ProtectedLayout>
+    ),
+    children:[{
+      path: '/Resources',
+      element: <Resource />,
+    },
+    {
+      path: '/Resources/create',
+      element: <CreateBlog />
+    }]
     },
     {
       path: "/Events",

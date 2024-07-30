@@ -18,6 +18,8 @@ import {useQuery} from '@tanstack/react-query';
 import { makeRequest } from '../../axios';
 import { Link } from 'react-router-dom';
 
+
+
 function LeftBar() {
 const {currentUser } = useContext(AuthContext);
 
@@ -53,10 +55,12 @@ const {isLoading, error, data}= useQuery({
             <span>Events</span>
           </div>
           </Link>
+          <Link to={`/Resources`} style={{textDecoration:'none',color:'inherit'}}>
           <div className="item">
-            <img src={Watch} alt="" />
-            <span>Watch</span>
+            <img src={Courses} alt="" />
+            <span>Resources</span>
           </div>
+          </Link>
           <div className="item">
             <img src={Memories} alt="" />
             <span>Memories</span>
@@ -65,10 +69,6 @@ const {isLoading, error, data}= useQuery({
         <hr />
         <div className="menu">
           <span>Your shortcuts</span>
-          <div className="item">
-            <img src={Events} alt="" />
-            <span>Events</span>
-          </div>
           <div className="item">
             <img src={Gaming} alt="" />
             <span>Gaming</span>

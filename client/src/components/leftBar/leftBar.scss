@@ -9,6 +9,7 @@
     overflow: scroll;
     background-color: themed('bgColor');
     color: themed('textColor');
+    cursor: pointer;
     @include mobile {
         display: none;
       }
