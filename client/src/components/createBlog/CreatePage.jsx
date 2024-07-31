@@ -5,12 +5,15 @@ import 'react-quill/dist/quill.snow.css';
 import {Navigate} from "react-router-dom";
 import { makeRequest } from '../../axios';
 
+
 function CreateBlog() {
 const [title, setTitle] = useState('');
+const [author,setAuthor] = useState('');
 const [summary, setSummary] = useState('');
 const [content, setContent] = useState('');
 const [files, setFiles] = useState([]);
-const [desc,setDesc] = useState('');
+const [redirect,setRedirect] = useState(false);
+
 
 const upload = async() => {
   try {
@@ -32,6 +35,7 @@ const createNewBlog = async (e) => {
    const formData = {
       title,
       summary,
+      author,
       content,
       imgURL
    }
@@ -44,8 +48,16 @@ const createNewBlog = async (e) => {
 
 
     const response = await makeRequest.post('/posts/blog', formData);
-    console.log(response);
+    
+    if(response.status === 200){
+      setRedirect(true);
+    }
+    console.log(redirect);
  }
+
+ if(redirect){
+  return <Navigate to={'/resources'} />
+}
 
   return (
   <div className="create-blog">
@@ -58,6 +70,10 @@ const createNewBlog = async (e) => {
            placeholder={'Summary'}
            value={summary}
            onChange={ev => setSummary(ev.target.value)} />
+    <input type="author"
+           placeholder={'Author'}
+           value={author}
+           onChange={ev => setAuthor(ev.target.value)} />
     <input type="file"
            onChange={ev => setFiles(ev.target.files)} />
     <Editor value={content} onChange={setContent} />

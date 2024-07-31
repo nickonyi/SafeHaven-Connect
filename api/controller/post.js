@@ -1,5 +1,6 @@
 import {db }from './connect.js';
 import jwt from 'jsonwebtoken';
+import Blog from '../models/Blog.js';
 import moment from 'moment';
 
 export const addPost =  (req, res) => {
@@ -80,10 +81,26 @@ export const addBlog = (req,res,next) => {
         const token = req.cookies.accessToken;
     
     if(!token) return res.status(401).json('Not logged in!');
-    jwt.verify(token,"secretkey",(err,userInfo)=> {
+    jwt.verify(token,"secretkey",async (err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
-        
-        console.log(req.body);
+         const  {title,summary,author,content,imgURL} = req.body;
+         console.log(author);
+         
+         const postDoc = await Blog.create({
+            title,
+            summary,
+            content,
+            author,
+            img:imgURL,
+         });
+
+         res.status(200).json(
+            {
+            success:"Blog added successfully!",
+            postDoc
+
+            }
+        );
     });
     } catch (error) {
         console.log(error);
