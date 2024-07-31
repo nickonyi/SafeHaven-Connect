@@ -108,3 +108,16 @@ export const addBlog = (req,res,next) => {
         
     }
 }
+
+
+export const getBlogs = async (req,res,next) => {
+    try {
+        res.json(
+            await Blog.find()
+              .sort({createdAt: -1})
+              .limit(20)
+          );
+    } catch (error) {
+        next(error)
+    }
+}

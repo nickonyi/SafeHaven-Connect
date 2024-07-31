@@ -36,6 +36,7 @@ import JoinEvent from "./pages/joinEvent/JoinEvent";
 import Resource from "./pages/resources/Resource";
 import CreatePage from "./components/createBlog/CreatePage";
 import CreateBlog from "./components/createBlog/CreatePage";
+import BlogPage from "./pages/blogPage/BlogPage";
 
 
 
@@ -97,7 +98,7 @@ function App() {
       <QueryClientProvider client ={queryClient}>
       <div className={`theme-${darkMode?"dark":"light"}`}>
         <NavBar />
-        <div style={{flex:6}}>
+        <div className="resources-container" style={{flex:6}}>
           <Outlet />
         </div>
         </div>
@@ -163,14 +164,20 @@ function App() {
         </UserContextProvider>
       </ProtectedLayout>
     ),
-    children:[{
+    children:[
+      {
       path: '/Resources',
       element: <Resource />,
     },
     {
       path: '/Resources/create',
       element: <CreateBlog />
-    }]
+    },
+    {
+      path: '/Resources/article/:id',
+      element: <BlogPage />
+    }
+  ]
     },
     {
       path: "/Events",
