@@ -1,4 +1,5 @@
 import './Resource.scss'
+import Blog from '../../components/blog/Blog'
 
 function Resource() {
   return (
