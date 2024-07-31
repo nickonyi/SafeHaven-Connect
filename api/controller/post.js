@@ -121,3 +121,19 @@ export const getBlogs = async (req,res,next) => {
         next(error)
     }
 }
+
+export const getBlogInfo = async (req,res,next) => {
+  try {
+    const {id} = req.params;
+    const postDoc = await Blog.findById(id);
+    res.json(
+        {
+        success:"Blog found!",
+        postDoc
+    }
+);
+  } catch (error) {
+    next(error)
+  }
+
+}

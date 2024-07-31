@@ -1,0 +1,51 @@
+@import '../../app.scss'; 
+
+
+.blog-page {
+@include themify($themes){
+padding: 10px;
+max-width: 960px;
+margin: 0 auto;
+
+
+h1 {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: themed('textColor');
+}
+
+.time {
+    text-align: center;
+}
+
+.author {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: themed('textColor');
+    text-align: center;
+    
+}
+
+
+.image {
+    img {
+        object-fit: cover;
+        object-position: center center;
+        width: 100%;
+        height: 350px;
+    }
+}
+
+.content {
+    color: themed('textColor');
+    font-size: 16px;
+    line-height: 1.5;
+}
+}
+}
+
+.blog-page * {
+    margin-block: 10px;
+}
