@@ -23,6 +23,7 @@ export const addComment =  (req, res) => {
     if(!token) return res.status(401).json('Not logged in!');
     jwt.verify(token,"secretkey",(err,userInfo)=> {
         if(err) return res.status(403).json('Invalid token!');
+        console.log(userInfo.id);
 
         const sql = "INSERT INTO comments (`desc`,`createdAt`,`userId`,`postId`) VALUES (?)";
 
